@@ -1,0 +1,22 @@
+{
+  "name": "todosh",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PunkMachinProjects/todosh.git"
+  },
+  "author": "PunkMachin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PunkMachinProjects/todosh/issues"
+  },
+  "homepage": "https://github.com/PunkMachinProjects/todosh#readme",
+  "devDependencies": {
+    "json-server": "^0.16.3"
+  }
+}
