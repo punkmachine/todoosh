@@ -1,0 +1,28 @@
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+	height: 80px;
+	border-bottom: 1px solid black;
+
+	&__auth {
+		width: 280px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__login {
+		@include btn;
+		color: #007bff;
+		border: 1px solid #007bff;
+	}
+	
+	&__register {
+		@include btn;
+		color: #28a745;
+		border: 1px solid #28a745;
+	}
+}
+
