@@ -16,12 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		modalRegisterClose = modalRegister.querySelector('.modal__close'),
 		modalRegisterOpen = document.querySelector('.header__register');
 
-	modalRegisterOpen.addEventListener('click', (event) => {
+	modalRegisterOpen.addEventListener('click', () => {
 		modalOpen(modalRegister);
-	});
-
-	modalRegisterClose.addEventListener('click', (event) => {
-		modalClose(modalRegister);
 	});
 
 	document.addEventListener('keydown', function(event) {
@@ -31,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	modalRegister.addEventListener('click', function(event) {
-		if (event.target === modalRegister) {
+		if (event.target === modalRegister || event.target === modalRegisterClose) {
 			modalClose(modalRegister);
 		}
 	});
@@ -41,12 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		modalLoginClose = modalLogin.querySelector('.modal__close'),
 		modalLoginOpen = document.querySelector('.header__login');
 
-	modalLoginOpen.addEventListener('click', (event) => {
+	modalLoginOpen.addEventListener('click', () => {
 		modalOpen(modalLogin);
-	});
-
-	modalLoginClose.addEventListener('click', (event) => {
-		modalClose(modalLogin);
 	});
 
 	document.addEventListener('keydown', function(event) {
@@ -56,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	modalLogin.addEventListener('click', function(event) {
-		if (event.target === modalLogin) {
+		if (event.target === modalLogin || event.target === modalLoginClose) {
 			modalClose(modalLogin);
 		}
 	});
