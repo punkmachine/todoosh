@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	padding: 20px;
 	height: 80px;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #dee2e6;
 
 	&__auth {
 		width: 280px;
@@ -15,14 +15,15 @@
 
 	&__login {
 		@include btn;
-		color: #007bff;
-		border: 1px solid #007bff;
+		color: #0d6efd;
+    	border-color: #0d6efd;
 	}
 	
 	&__register {
 		@include btn;
-		color: #28a745;
-		border: 1px solid #28a745;
+		color: #fff;
+		background-color: #0d6efd;
+		border-color: #0d6efd;
 	}
 }
 

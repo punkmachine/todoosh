@@ -17,7 +17,7 @@
           justify-content: space-between;
   padding: 20px;
   height: 80px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .header__auth {
@@ -35,19 +35,22 @@
 
 .header__login {
   padding: 10px 20px;
-  background-color: #ffffff;
   cursor: pointer;
-  border-radius: 10px;
-  color: #007bff;
-  border: 1px solid #007bff;
+  border-radius: 7px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #0d6efd;
+  border-color: #0d6efd;
 }
 
 .header__register {
   padding: 10px 20px;
-  background-color: #ffffff;
   cursor: pointer;
-  border-radius: 10px;
-  color: #28a745;
-  border: 1px solid #28a745;
+  border-radius: 7px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 /*# sourceMappingURL=main.css.map */
