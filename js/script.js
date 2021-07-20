@@ -59,6 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
 		  modalAddOpen = document.querySelector('.main__add-tasks'),
 		  addTasksBtn = modalAdd.querySelector('button');
 
+	//настройка запроса, посыл запроса на сервер и получение ответа
+	async function postData(url, data) {
+		const res = await fetch(url, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			mode: 'no-cors',
+			body: data
+		});
+
+		return await res.json();
+	}
+
 	modalAddOpen.addEventListener('click', () => {
 		modalOpen(modalAdd);
 	});
@@ -73,5 +87,36 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (event.target === modalAdd || event.target === modalAddClose) {
 			modalClose(modalAdd);
 		}
+	});
+
+	modalAdd.addEventListener('submit', function(event) {
+		event.preventDefault();
+
+		const form = modalAdd.querySelector('form');
+
+		//конструкция данных из форм
+		const formData = new FormData(form);
+
+		//Превращение данных в матрицу, потом в объект.
+		let json = Object.fromEntries(formData.entries());
+
+		//обработка для заглавной буквы
+		json.name = S(`${json.name}`).capitalize().s;
+
+		//превращение данных в json
+		json = JSON.stringify(json);
+
+		console.log(json);
+
+		//обработка промиса
+		postData('http://localhost:8080/task/create-task', json)
+			.then(() => {
+				alert('ВСЕ ЧУДЕСНО!');
+			}).catch((error) => {
+				alert('Все плохо!');
+				console.log(error);
+			}).finally(() => {
+				form.reset();
+			});
 	});
 });
