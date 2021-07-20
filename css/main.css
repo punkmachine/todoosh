@@ -30,9 +30,8 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .header__login {
@@ -41,6 +40,8 @@
   border-radius: 7px;
   background-color: transparent;
   border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
   color: #0d6efd;
   border-color: #0d6efd;
 }
@@ -51,6 +52,8 @@
   border-radius: 7px;
   background-color: transparent;
   border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
@@ -139,6 +142,8 @@
   border-radius: 7px;
   background-color: transparent;
   border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
