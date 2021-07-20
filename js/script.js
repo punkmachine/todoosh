@@ -52,4 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
 			modalClose(modalLogin);
 		}
 	});
+
+	//modal add 
+	const modalAdd = document.querySelector('#add'),
+		  modalAddClose = modalAdd.querySelector('.modal__close'),
+		  modalAddOpen = document.querySelector('.main__add-tasks'),
+		  addTasksBtn = modalAdd.querySelector('button');
+
+	modalAddOpen.addEventListener('click', () => {
+		modalOpen(modalAdd);
+	});
+
+	document.addEventListener('keydown', function(event) {
+		if (event.code === 'Escape' && modalAdd.classList.contains('modal_show')) {
+			modalClose(modalAdd);
+		}
+	});
+
+	modalAdd.addEventListener('click', function(event) {
+		if (event.target === modalAdd || event.target === modalAddClose) {
+			modalClose(modalAdd);
+		}
+	});
 });
