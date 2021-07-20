@@ -119,4 +119,32 @@ document.addEventListener('DOMContentLoaded', () => {
 				form.reset();
 			});
 	});
+
+	
+	
+	// раскрытие таска 
+	let tasks = document.querySelectorAll('.main__task');
+	
+	tasks.forEach(function(task) {
+		let taskTitle = task.querySelector('.main__task-title');
+		let taskDescr = task.querySelector('.main__task-descr');
+		let triangle = task.querySelector('svg');
+
+		taskDescr.style.display = 'none';
+
+		taskTitle.addEventListener('click', () => {
+			if (taskDescr.style.display == 'none') {
+				taskDescr.style.display = 'block';
+			} else {
+				taskDescr.style.display = 'none';
+			}
+
+			if (triangle.style.transform == 'rotateZ(180deg)') {
+				triangle.style.transform = 'rotateZ(90deg)';
+			} else {
+				triangle.style.transform = 'rotateZ(180deg)';
+			}
+ 			
+		});
+	});
 });
