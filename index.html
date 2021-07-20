@@ -19,7 +19,20 @@
 		</div>
 	</header>
 
-	<main></main>
+	<main class="main">
+		<h2 class="main__title">На очереди</h2>
+		<div class="main__divider"></div>
+
+		<div class="main__add-wrapper">
+			<div class="main__add-tasks">
+				<span>+</span>
+			</div>
+		</div>
+
+		<h2 class="main__title">Выполнено</h2>
+		<div class="main__divider"></div>
+	</main>
+
 	<footer></footer>
 
 	<div class="modal modal_hide" id="register">
@@ -45,6 +58,22 @@
 					<input required placeholder="Ваш логин" name="name" type="text" class="modal__input">
 					<input required placeholder="Ваш пароль" name="password" type="password" class="modal__input">
 					<button class="modal__btn">Войти</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal_hide" id="add">
+		<div class="modal__wrapper">
+			<div class="modal__content">
+				<form action="#" method="get" class="modal__form">
+					<div class="modal__close">&times;</div>
+					<h3 class="modal__title">Добавить задачу</h3>
+					<input required placeholder="Название задачи" name="name" type="text" class="modal__input">
+					<textarea placeholder="Описание задачи" name="description" type="text"></textarea>
+					<div class="modal__button-wrapper">
+						<button class="modal__btn">Добавить задачу</button>
+					</div>
 				</form>
 			</div>
 		</div>

@@ -1,0 +1,38 @@
+.main {
+	max-width: 1340px;
+	margin: 0 auto;
+
+	&__title {
+		margin-top: 20px;
+		font-size: 28px;
+	}
+
+	&__divider {
+		margin-top: 5px;
+		height: 2px;
+		width: 100%;
+		background-color: #dee2e6;
+	}
+
+	&__add-wrapper {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-top: 5px;
+	}
+
+	&__add-tasks {
+		border: 1px solid black;
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		span {
+			user-select: none;
+			font-size: 26px;
+		}
+	}
+}
