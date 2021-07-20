@@ -35,4 +35,23 @@
 			font-size: 26px;
 		}
 	}
+
+	&__tasks-wrapper {
+		padding: 15px;
+	}
+
+	&__task {
+		margin: 5px 0;
+		display: flex;
+
+		svg {
+			margin-top: 5px;
+		}
+
+		&-title {
+			margin-left: 5px;
+			font-size: 18px;
+			cursor: pointer;
+		}
+	}
 }
