@@ -103,8 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		//Превращение данных в матрицу, потом в объект.
 		let json = Object.fromEntries(formData.entries());
 
-		//обработка для заглавной буквы
-		json.name = S(`${json.name}`).capitalize().s;
+		//обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
+		json.name = S(`${json.name}`).replaceAll('_', '').s;
+		json.description = S(`${json.description}`).replaceAll('_', '').s;
+		json.name = S(`${json.name}`).humanize().s;
+		json.description = S(`${json.description}`).humanize().s;
 
 		//превращение данных в json
 		json = JSON.stringify(json);
