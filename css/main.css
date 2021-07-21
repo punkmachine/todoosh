@@ -47,6 +47,10 @@
   border-color: #0d6efd;
 }
 
+.header__login:focus {
+  outline: none;
+}
+
 .header__register {
   padding: 10px 20px;
   cursor: pointer;
@@ -58,6 +62,10 @@
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
+}
+
+.header__register:focus {
+  outline: none;
 }
 
 .modal {
@@ -150,6 +158,10 @@
   border-color: #0d6efd;
 }
 
+.modal__btn:focus {
+  outline: none;
+}
+
 .modal_hide {
   display: none;
 }
@@ -238,6 +250,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  cursor: pointer;
 }
 
 .main__add-tasks span {
@@ -254,9 +267,11 @@
 
 .main__task {
   margin: 5px 0;
+  padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  cursor: pointer;
 }
 
 .main__task svg {
@@ -267,5 +282,10 @@
   margin-left: 5px;
   font-size: 18px;
   cursor: pointer;
+}
+
+.main__task:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+  border-radius: 5px;
 }
 /*# sourceMappingURL=main.css.map */

@@ -132,13 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	let tasks = document.querySelectorAll('.main__task');
 	
 	tasks.forEach(function(task) {
-		let taskTitle = task.querySelector('.main__task-title');
 		let taskDescr = task.querySelector('.main__task-descr');
 		let triangle = task.querySelector('svg');
 
 		taskDescr.style.display = 'none';
 
-		taskTitle.addEventListener('click', () => {
+		task.addEventListener('click', () => {
 			if (taskDescr.style.display == 'none') {
 				taskDescr.style.display = 'block';
 			} else {
