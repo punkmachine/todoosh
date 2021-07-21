@@ -1,3 +1,5 @@
+//Todo: переменные и миксины, для сокращения кода и его оптимизации. 
+
 .modal {
 	position: fixed;
 	top: 0;
@@ -110,6 +112,5 @@
 	.modal__button-wrapper {
 		display: flex;
 		justify-content: flex-end;
-
 	}
 }

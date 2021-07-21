@@ -1,5 +1,8 @@
 'use strict';
 
+// TODO: Сделать всё модульно и собирать с помощью webpack
+// TODO: Навесить обработчики закрытия форм на них с помощью forEach
+
 document.addEventListener('DOMContentLoaded', () => {
 	function modalOpen(modal) {
 		modal.classList.remove('modal_hide');
