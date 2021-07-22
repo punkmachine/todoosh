@@ -65,15 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	//настройка запроса, посыл запроса на сервер и получение ответа
 	async function postData(url, data) {
 		const res = await fetch(url, {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
+				'Content-Type': 'application/json;charset=utf-8',
 			},
-			mode: 'no-cors',
+			mode: 'cors',
 			body: data
 		});
 
-		return await res.json();
+		return await res;
 	}
 
 	modalAddOpen.addEventListener('click', () => {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log(json);
 
 		//обработка промиса
-		postData('http://localhost:8080/task/create-task', json)
+		postData('http://localhost:8080/api/create-task', json)
 			.then(() => {
 				alert('ВСЕ ЧУДЕСНО!');
 			}).catch((error) => {
