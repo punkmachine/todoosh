@@ -265,6 +265,10 @@
   padding: 15px;
 }
 
+.main__content {
+  width: 100%;
+}
+
 .main__task {
   margin: 5px 0;
   padding: 5px;
@@ -282,6 +286,13 @@
   margin-left: 5px;
   font-size: 18px;
   cursor: pointer;
+}
+
+.main__task-date {
+  width: 100%;
+  text-align: right;
+  font-size: 14px;
+  color: #5d5d5d;
 }
 
 .main__task:hover {
