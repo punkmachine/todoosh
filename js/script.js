@@ -127,23 +127,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	
 	// раскрытие таска 
-	let tasks = document.querySelectorAll('.main__task');
-	
-	tasks.forEach(function(task) {
-		let taskDescr = task.querySelector('.main__task-descr');
-		let triangle = task.querySelector('svg');
-		let taskDate = task.querySelector('.main__task-date');
+	let tasksTitle = document.querySelectorAll('.main__task-title');
+	let tasksDescr = document.querySelectorAll('.main__task-block-two');
 
-		taskDescr.style.display = 'none';
-		taskDate.style.display = 'none';
+	tasksDescr.forEach(function(item) {
+		item.style.display = 'none';
+	});
 
-		task.addEventListener('click', () => {
-			if (taskDescr.style.display == 'none') {
-				taskDescr.style.display = 'block';
-				taskDate.style.display = 'block';
+	tasksTitle.forEach(function(item) {
+		item.addEventListener('click', () => {
+			let itemDescr = tasksDescr[item.dataset.task-1];
+			let triangle = item.querySelector('svg');
+
+			if (itemDescr.style.display == 'none') {
+				itemDescr.style.display = 'block';
 			} else {
-				taskDescr.style.display = 'none';
-				taskDate.style.display = 'none';
+				itemDescr.style.display = 'none';
 			}
 
 			if (triangle.style.transform == 'rotateZ(180deg)') {
@@ -151,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			} else {
 				triangle.style.transform = 'rotateZ(180deg)';
 			}
- 			
 		});
 	});
 });

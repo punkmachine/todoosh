@@ -50,12 +50,10 @@
 	&__task {
 		margin: 5px 0;
 		padding: 5px;
-		
-		cursor: pointer;
 
 		&-block-one {
 			display: flex;
-			align-items: flex-start;
+			align-items: center;
 			justify-content: space-between;
 		}
 
@@ -70,6 +68,7 @@
 			cursor: pointer;
 			display: flex;
 			align-items: flex-start;
+			width: 100%;
 		}
 
 		&-date {
@@ -87,11 +86,14 @@
 		&-icon {
 			width: 20px;
 			height: 20px;
-			margin-right: 4px;
+			margin: 0 4px;
 		}
 
 		&-interactiv {
 			user-select: none;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
 	}
 }

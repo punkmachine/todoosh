@@ -272,16 +272,15 @@
 .main__task {
   margin: 5px 0;
   padding: 5px;
-  cursor: pointer;
 }
 
 .main__task-block-one {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -302,6 +301,7 @@
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  width: 100%;
 }
 
 .main__task-date {
@@ -319,7 +319,7 @@
 .main__task-icon {
   width: 20px;
   height: 20px;
-  margin-right: 4px;
+  margin: 0 4px;
 }
 
 .main__task-interactiv {
@@ -327,5 +327,14 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 /*# sourceMappingURL=main.css.map */
