@@ -50,17 +50,26 @@
 	&__task {
 		margin: 5px 0;
 		padding: 5px;
-		display: flex;
+		
 		cursor: pointer;
+
+		&-block-one {
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+		}
 
 		svg {
 			margin-top: 7px;
+			margin-right: 7px;
 		}
 
 		&-title {
 			margin-left: 5px;
 			font-size: 18px;
 			cursor: pointer;
+			display: flex;
+			align-items: flex-start;
 		}
 
 		&-date {
@@ -73,6 +82,16 @@
 		&:hover {
 			background-color: rgba(55, 53, 47, 0.08);
 			border-radius: 5px;
+		}
+
+		&-icon {
+			width: 20px;
+			height: 20px;
+			margin-right: 4px;
+		}
+
+		&-interactiv {
+			user-select: none;
 		}
 	}
 }

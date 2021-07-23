@@ -125,8 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				form.reset();
 			});
 	});
-
-	
 	
 	// раскрытие таска 
 	let tasks = document.querySelectorAll('.main__task');
@@ -134,14 +132,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	tasks.forEach(function(task) {
 		let taskDescr = task.querySelector('.main__task-descr');
 		let triangle = task.querySelector('svg');
+		let taskDate = task.querySelector('.main__task-date');
 
 		taskDescr.style.display = 'none';
+		taskDate.style.display = 'none';
 
 		task.addEventListener('click', () => {
 			if (taskDescr.style.display == 'none') {
 				taskDescr.style.display = 'block';
+				taskDate.style.display = 'block';
 			} else {
 				taskDescr.style.display = 'none';
+				taskDate.style.display = 'none';
 			}
 
 			if (triangle.style.transform == 'rotateZ(180deg)') {

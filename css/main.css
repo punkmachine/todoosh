@@ -272,20 +272,36 @@
 .main__task {
   margin: 5px 0;
   padding: 5px;
+  cursor: pointer;
+}
+
+.main__task-block-one {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  cursor: pointer;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .main__task svg {
   margin-top: 7px;
+  margin-right: 7px;
 }
 
 .main__task-title {
   margin-left: 5px;
   font-size: 18px;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
 }
 
 .main__task-date {
@@ -298,5 +314,18 @@
 .main__task:hover {
   background-color: rgba(55, 53, 47, 0.08);
   border-radius: 5px;
+}
+
+.main__task-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+.main__task-interactiv {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 /*# sourceMappingURL=main.css.map */
