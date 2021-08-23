@@ -59,8 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	//modal add 
 	const modalAdd = document.querySelector('#add'),
 		  modalAddClose = modalAdd.querySelector('.modal__close'),
-		  modalAddOpen = document.querySelector('.main__add-tasks'),
-		  addTasksBtn = modalAdd.querySelector('button');
+		  modalAddOpen = document.querySelector('.main__add-tasks');
 
 	//настройка запроса, посыл запроса на сервер и получение ответа
 	async function postData(url, data) {
@@ -68,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8',
+				"alg": "HS256",
+  				"typ": "JWT",
+				"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU"
 			},
 			mode: 'cors',
 			body: data
@@ -116,8 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		//обработка промиса
 		postData('http://localhost:8080/api/create-task', json)
-			.then(() => {
-				alert('ВСЕ ЧУДЕСНО!');
+			.then((res) => {
+				if (res.status === 200) {
+					alert('Успешно отправлено!');
+				} else {
+					alert(`Отправка данных не произошла, код ошибки ${res.status}`)
+				}
 			}).catch((error) => {
 				alert('Все плохо!');
 				console.log(error);
