@@ -12,7 +12,7 @@ function taskVisibleDescr() {
 
 	tasksTitle.forEach(function(item) {
 		item.addEventListener('click', () => {
-			let itemDescr = tasksDescr[item.dataset.task-1];
+			let itemDescr = tasksDescr[item.dataset.task];
 			let triangle = item.querySelector('svg');
 
 			if (itemDescr.style.display == 'none') {

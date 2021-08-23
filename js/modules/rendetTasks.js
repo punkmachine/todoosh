@@ -21,7 +21,7 @@ function renderTasks() {
 			if (!(this.isDone)) {
 				element.innerHTML = `
 				<div class="main__task-block-one">
-					<div class="main__task-title" data-task=${this.id+1}>
+					<div class="main__task-title" data-task=${this.id}>
 						<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
 						<span>${this.title}</span>
 					</div>
@@ -31,7 +31,7 @@ function renderTasks() {
 						<img src="img/delete.svg" class="main__task-icon">
 					</div>
 				</div>
-				<div class="main__task-block-two" data-task=${this.id+1}>
+				<div class="main__task-block-two" data-task=${this.id}>
 					<div class="main__task-descr">${this.descr}</div>
 					<div class="main__task-date">${this.date}</div>
 				</div>
