@@ -13,6 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
+/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
+
 
 
 
@@ -69,7 +71,8 @@ function addTask() {
 
     postData('http://localhost:8080/api/create-task', json).then(res => {
       if (res.status === 200) {
-        alert('Успешно отправлено!');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
       } else {
         alert(`Отправка данных не произошла, код ошибки ${res.status}`);
       }
@@ -193,22 +196,22 @@ function renderTasks() {
 
       if (!this.isDone) {
         element.innerHTML = `
-				<div class="main__task-block-one">
-					<div class="main__task-title" data-task=${this.id}>
-						<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
-						<span>${this.title}</span>
+					<div class="main__task-block-one">
+						<div class="main__task-title" data-task=${this.id}>
+							<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
+							<span>${this.title}</span>
+						</div>
+						<div class="main__task-interactiv">
+							<img src="img/pencil.svg" class="main__task-icon">
+							<img src="img/check-mark.svg" class="main__task-icon">
+							<img src="img/delete.svg" class="main__task-icon">
+						</div>
 					</div>
-					<div class="main__task-interactiv">
-						<img src="img/pencil.svg" class="main__task-icon">
-						<img src="img/check-mark.svg" class="main__task-icon">
-						<img src="img/delete.svg" class="main__task-icon">
+					<div class="main__task-block-two" data-task=${this.id}>
+						<div class="main__task-descr">${this.descr}</div>
+						<div class="main__task-date">${this.date}</div>
 					</div>
-				</div>
-				<div class="main__task-block-two" data-task=${this.id}>
-					<div class="main__task-descr">${this.descr}</div>
-					<div class="main__task-date">${this.date}</div>
-				</div>
-			`;
+				`;
       }
 
       document.querySelector('.main__tasks-wrapper').append(element);
@@ -237,11 +240,16 @@ function renderTasks() {
 
   getData('http://localhost:8080/api/tasks').then(res => {
     arrayTasks = res;
-    console.log(arrayTasks);
-    arrayTasks.forEach(function (item, index) {
-      let task = new TaskCard(item.id, item.name, item.updatedAt, item.isDone, item.description);
-      task.render();
-    });
+
+    if (arrayTasks.length == 0) {
+      document.querySelector('.main__tasks-wrapper').innerHTML = 'Заданий пока нет. ';
+    } else {
+      document.querySelector('.main__tasks-wrapper').innerHTML = '';
+      arrayTasks.forEach(function (item, index) {
+        let task = new TaskCard(item.id, item.name, item.updatedAt, item.isDone, item.description);
+        task.render();
+      });
+    }
   }).catch(error => {
     console.log(error);
   }).finally(() => {
@@ -273,7 +281,7 @@ function taskVisibleDescr() {
   });
   tasksTitle.forEach(function (item) {
     item.addEventListener('click', () => {
-      let itemDescr = tasksDescr[item.dataset.task];
+      let itemDescr = tasksDescr[item.dataset.task - 1];
       let triangle = item.querySelector('svg');
 
       if (itemDescr.style.display == 'none') {

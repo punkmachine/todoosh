@@ -20,22 +20,22 @@ function renderTasks() {
 
 			if (!(this.isDone)) {
 				element.innerHTML = `
-				<div class="main__task-block-one">
-					<div class="main__task-title" data-task=${this.id}>
-						<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
-						<span>${this.title}</span>
+					<div class="main__task-block-one">
+						<div class="main__task-title" data-task=${this.id}>
+							<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
+							<span>${this.title}</span>
+						</div>
+						<div class="main__task-interactiv">
+							<img src="img/pencil.svg" class="main__task-icon">
+							<img src="img/check-mark.svg" class="main__task-icon">
+							<img src="img/delete.svg" class="main__task-icon">
+						</div>
 					</div>
-					<div class="main__task-interactiv">
-						<img src="img/pencil.svg" class="main__task-icon">
-						<img src="img/check-mark.svg" class="main__task-icon">
-						<img src="img/delete.svg" class="main__task-icon">
+					<div class="main__task-block-two" data-task=${this.id}>
+						<div class="main__task-descr">${this.descr}</div>
+						<div class="main__task-date">${this.date}</div>
 					</div>
-				</div>
-				<div class="main__task-block-two" data-task=${this.id}>
-					<div class="main__task-descr">${this.descr}</div>
-					<div class="main__task-date">${this.date}</div>
-				</div>
-			`;
+				`;
 			}
 
 			document.querySelector('.main__tasks-wrapper').append(element);
@@ -67,12 +67,16 @@ function renderTasks() {
 	getData('http://localhost:8080/api/tasks')
 		.then((res) => {
 			arrayTasks = res;
-			console.log(arrayTasks);
+			if (arrayTasks.length == 0) {
+				document.querySelector('.main__tasks-wrapper').innerHTML = 'Заданий пока нет. ';
+			} else {
+				document.querySelector('.main__tasks-wrapper').innerHTML = '';
 
-			arrayTasks.forEach(function(item, index) {
-				let task = new TaskCard(item.id, item.name, item.updatedAt, item.isDone, item.description);
-				task.render();
-			});
+				arrayTasks.forEach(function(item, index) {
+					let task = new TaskCard(item.id, item.name, item.updatedAt, item.isDone, item.description);
+					task.render();
+				});
+			}
 		}).catch((error) => {
 			console.log(error);
 		}).finally(() => {

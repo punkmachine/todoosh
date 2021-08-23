@@ -1,6 +1,7 @@
 'use strict';
 
 import {modalOpen, modalClose} from '../services/modal';
+import renderTasks from './rendetTasks';
 
 function addTask() {
 	//modal add 
@@ -67,7 +68,8 @@ function addTask() {
 	postData('http://localhost:8080/api/create-task', json)
 		.then((res) => {
 			if (res.status === 200) {
-				alert('Успешно отправлено!');
+				renderTasks();
+				modalClose(modalAdd);
 			} else {
 				alert(`Отправка данных не произошла, код ошибки ${res.status}`)
 			}
