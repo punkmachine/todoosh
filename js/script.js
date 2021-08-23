@@ -3,7 +3,7 @@
 import modalRegister from './modules/modalRegister';
 import modalLogin from './modules/modalLogin';
 import renderTasks from './modules/rendetTasks';
-import taskVisibleDescr from './modules/taskVisibleDescr';
+// import taskVisibleDescr from './modules/taskVisibleDescr';
 import addTask from './modules/addTask';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,5 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
 	modalLogin();
 	renderTasks();
 	addTask();
-	taskVisibleDescr();
+	// taskVisibleDescr();
 });

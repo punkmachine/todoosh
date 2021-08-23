@@ -16,6 +16,9 @@
     "url": "https://github.com/PunkMachinProjects/todosh/issues"
   },
   "homepage": "https://github.com/PunkMachinProjects/todosh#readme",
+  "browserslist": [
+	"> 3%"
+   ],
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
