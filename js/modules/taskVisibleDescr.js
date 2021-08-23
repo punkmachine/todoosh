@@ -1,7 +1,5 @@
 'use strict';
 
-//TODO: надо запускать при добавлении нового таска.
-
 function taskVisibleDescr() {
 	let tasksTitle = document.querySelectorAll('.main__task-title');
 	let tasksDescr = document.querySelectorAll('.main__task-block-two');

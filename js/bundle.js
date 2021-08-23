@@ -73,6 +73,8 @@ function addTask() {
       if (res.status === 200) {
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
+      } else if (res.status === 401) {
+        alert(`Авторизуйтесь, чтобы добавлять задачи.`);
       } else {
         alert(`Отправка данных не произошла, код ошибки ${res.status}`);
       }
@@ -176,7 +178,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskVisibleDescr */ "./js/modules/taskVisibleDescr.js");
- //TODO: надо запускать при добавлении нового таска.
+
 
 
 
@@ -186,8 +188,15 @@ function renderTasks() {
       this.id = id;
       this.title = title;
       this.descr = descr;
-      this.date = date;
       this.isDone = isDone;
+      this.date = {
+        'year': +date.slice(0, 4),
+        'month': +date.slice(5, 7),
+        'day': +date.slice(8, 10),
+        'hours': Math.floor(Date.parse(date) / 3600000 % 24),
+        'minutes': Math.floor(Date.parse(date) / 60000 % 60),
+        'seconds': Math.floor(Date.parse(date) / 1000 % 60)
+      };
     }
 
     render() {
@@ -209,7 +218,8 @@ function renderTasks() {
 					</div>
 					<div class="main__task-block-two" data-task=${this.id}>
 						<div class="main__task-descr">${this.descr}</div>
-						<div class="main__task-date">${this.date}</div>
+						<div class="main__task-date">Дата: ${this.date.day}.${getZero(this.date.month)}.${this.date.year}</div>
+						<div class="main__task-date">Время: ${this.date.hours}:${this.date.minutes}</div>
 					</div>
 				`;
       }
@@ -217,6 +227,14 @@ function renderTasks() {
       document.querySelector('.main__tasks-wrapper').append(element);
     }
 
+  }
+
+  function getZero(num) {
+    if (num >= 0 && num < 10) {
+      return `0${num}`;
+    } else {
+      return num;
+    }
   } //получени всех тасков
 
 
@@ -271,7 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
- //TODO: надо запускать при добавлении нового таска.
+
 
 function taskVisibleDescr() {
   let tasksTitle = document.querySelectorAll('.main__task-title');

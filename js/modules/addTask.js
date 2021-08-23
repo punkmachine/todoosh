@@ -70,8 +70,10 @@ function addTask() {
 			if (res.status === 200) {
 				renderTasks();
 				modalClose(modalAdd);
+			} else if (res.status === 401) {
+				alert(`Авторизуйтесь, чтобы добавлять задачи.`);
 			} else {
-				alert(`Отправка данных не произошла, код ошибки ${res.status}`)
+				alert(`Отправка данных не произошла, код ошибки ${res.status}`);
 			}
 		}).catch((error) => {
 			alert('Все плохо!');

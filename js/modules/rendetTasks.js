@@ -1,7 +1,5 @@
 'use strict';
 
-//TODO: надо запускать при добавлении нового таска.
-
 import taskVisibleDescr from "./taskVisibleDescr";
 
 function renderTasks() {
@@ -10,8 +8,15 @@ function renderTasks() {
 			this.id = id;
 			this.title = title;
 			this.descr = descr;
-			this.date = date;
 			this.isDone = isDone;
+			this.date = {
+				'year': +date.slice(0, 4),
+				'month': +date.slice(5, 7),
+				'day': +date.slice(8, 10),
+				'hours': Math.floor((Date.parse(date) / 3600000) % 24),
+				'minutes': Math.floor((Date.parse(date) / 60000) % 60),
+				'seconds': Math.floor((Date.parse(date) / 1000) % 60)
+			}
 		}
 
 		render() {
@@ -33,12 +38,21 @@ function renderTasks() {
 					</div>
 					<div class="main__task-block-two" data-task=${this.id}>
 						<div class="main__task-descr">${this.descr}</div>
-						<div class="main__task-date">${this.date}</div>
+						<div class="main__task-date">Дата: ${this.date.day}.${getZero(this.date.month)}.${this.date.year}</div>
+						<div class="main__task-date">Время: ${this.date.hours}:${this.date.minutes}</div>
 					</div>
 				`;
 			}
 
 			document.querySelector('.main__tasks-wrapper').append(element);
+		}
+	}
+
+	function getZero(num) {
+		if (num >= 0 && num < 10) {
+			return `0${num}`;
+		} else {
+			return num;
 		}
 	}
 
