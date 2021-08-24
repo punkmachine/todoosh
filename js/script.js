@@ -9,8 +9,8 @@ import addTask from './modules/addTask';
 //TODO: обработка статусов 400-500 ошибок.
 
 document.addEventListener('DOMContentLoaded', () => {
+	renderTasks();
 	modalRegister();
 	modalLogin();
-	renderTasks();
 	addTask();
 });

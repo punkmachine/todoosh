@@ -72,6 +72,8 @@ function renderTasks() {
 			throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
 		}
 
+		// console.log(res);
+
 		return res.json();
 	}
 
@@ -81,6 +83,7 @@ function renderTasks() {
 	getData('http://localhost:8080/api/tasks')
 		.then((res) => {
 			arrayTasks = res;
+			
 			if (arrayTasks.length == 0) {
 				document.querySelector('.main__tasks-wrapper').innerHTML = 'Заданий пока нет. ';
 			} else {

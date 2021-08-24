@@ -249,7 +249,8 @@ function renderTasks() {
 
     if (!res.ok) {
       throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
-    }
+    } // console.log(res);
+
 
     return res.json();
   }
@@ -292,27 +293,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function taskVisibleDescr() {
-  let tasksTitle = document.querySelectorAll('.main__task-title');
-  let tasksDescr = document.querySelectorAll('.main__task-block-two');
+  let tasksTitle = document.querySelectorAll('.main__task-title'),
+      tasksDescr = document.querySelectorAll('.main__task-block-two'),
+      doneTasksTitle = document.querySelectorAll('.done__task-title'),
+      doneTasksDescr = document.querySelectorAll('.done__task-block-two');
+
+  function transformStyleItem(itemDescr, triangle) {
+    if (itemDescr.style.display == 'none') {
+      itemDescr.style.display = 'block';
+    } else {
+      itemDescr.style.display = 'none';
+    }
+
+    if (triangle.style.transform == 'rotateZ(180deg)') {
+      triangle.style.transform = 'rotateZ(90deg)';
+    } else {
+      triangle.style.transform = 'rotateZ(180deg)';
+    }
+  }
+
   tasksDescr.forEach(function (item) {
+    item.style.display = 'none';
+  });
+  doneTasksDescr.forEach(function (item) {
     item.style.display = 'none';
   });
   tasksTitle.forEach(function (item) {
     item.addEventListener('click', () => {
       let itemDescr = tasksDescr[item.dataset.task - 1];
       let triangle = item.querySelector('svg');
-
-      if (itemDescr.style.display == 'none') {
-        itemDescr.style.display = 'block';
-      } else {
-        itemDescr.style.display = 'none';
-      }
-
-      if (triangle.style.transform == 'rotateZ(180deg)') {
-        triangle.style.transform = 'rotateZ(90deg)';
-      } else {
-        triangle.style.transform = 'rotateZ(180deg)';
-      }
+      transformStyleItem(itemDescr, triangle);
+    });
+  });
+  doneTasksTitle.forEach(function (item) {
+    item.addEventListener('click', () => {
+      let itemDescr = doneTasksDescr[item.dataset.done - 1];
+      let triangle = item.querySelector('svg');
+      transformStyleItem(itemDescr, triangle);
     });
   });
 }
@@ -425,9 +442,9 @@ __webpack_require__.r(__webpack_exports__);
 //TODO: обработка статусов 400-500 ошибок.
 
 document.addEventListener('DOMContentLoaded', () => {
+  (0,_modules_rendetTasks__WEBPACK_IMPORTED_MODULE_2__.default)();
   (0,_modules_modalRegister__WEBPACK_IMPORTED_MODULE_0__.default)();
   (0,_modules_modalLogin__WEBPACK_IMPORTED_MODULE_1__.default)();
-  (0,_modules_rendetTasks__WEBPACK_IMPORTED_MODULE_2__.default)();
   (0,_modules_addTask__WEBPACK_IMPORTED_MODULE_3__.default)();
 });
 })();
