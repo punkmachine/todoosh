@@ -13,10 +13,8 @@ function renderTasks() {
 				'year': +date.slice(0, 4),
 				'month': +date.slice(5, 7),
 				'day': +date.slice(8, 10),
-				'hours': Math.floor((Date.parse(date) / 3600000) % 24),
-				'minutes': Math.floor((Date.parse(date) / 60000) % 60),
-				'seconds': Math.floor((Date.parse(date) / 1000) % 60)
 			}
+			this.time = date;
 		}
 
 		render() {
@@ -39,7 +37,6 @@ function renderTasks() {
 					<div class="main__task-block-two" data-task=${this.id}>
 						<div class="main__task-descr">${this.descr}</div>
 						<div class="main__task-date">Дата: ${this.date.day}.${getZero(this.date.month)}.${this.date.year}</div>
-						<div class="main__task-date">Время: ${this.date.hours}:${this.date.minutes}</div>
 					</div>
 				`;
 			}

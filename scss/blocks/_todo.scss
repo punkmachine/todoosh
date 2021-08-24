@@ -113,6 +113,7 @@
 		&-icon {
 			@include task-icon;
 
+			margin: 0 4px !important;
 			fill: #b4a4a4;
 		}
 
