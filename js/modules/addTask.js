@@ -65,7 +65,7 @@ function addTask() {
 	console.log(json);
 
 	//обработка промиса
-	postData('http://localhost:8080/api/create-task', json)
+	postData('http://localhost:8080/api/task/new', json)
 		.then((res) => {
 			if (res.status === 200) {
 				renderTasks();

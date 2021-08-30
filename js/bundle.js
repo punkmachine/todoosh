@@ -69,7 +69,7 @@ function addTask() {
     json = JSON.stringify(json);
     console.log(json); //обработка промиса
 
-    postData('http://localhost:8080/api/create-task', json).then(res => {
+    postData('http://localhost:8080/api/task/new', json).then(res => {
       if (res.status === 200) {
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
