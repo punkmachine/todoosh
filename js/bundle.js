@@ -91,6 +91,51 @@ function addTask() {
 
 /***/ }),
 
+/***/ "./js/modules/deleteTask.js":
+/*!**********************************!*\
+  !*** ./js/modules/deleteTask.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+
+
+function deleteTask() {
+  let deleteBtn = document.querySelectorAll('.deleteBtn');
+
+  async function deleteData(url) {
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "alg": "HS256",
+        "typ": "JWT",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU"
+      },
+      mode: 'cors'
+    });
+    return await res;
+  }
+
+  deleteBtn.forEach(item => {
+    let idTask = item.dataset.taskid;
+    item.addEventListener('click', () => {
+      let task = document.querySelector(`[data-task="${idTask}"]`);
+      deleteData(`http://localhost:8080/api/task/${task.dataset.task}`).then(res => {
+        console.log('Успешно удалено');
+      }).catch(error => {
+        console.log('Ошибка fetch:' + error);
+      });
+    });
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (deleteTask);
+
+/***/ }),
+
 /***/ "./js/modules/modalLogin.js":
 /*!**********************************!*\
   !*** ./js/modules/modalLogin.js ***!
@@ -178,6 +223,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskVisibleDescr */ "./js/modules/taskVisibleDescr.js");
+/* harmony import */ var _deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteTask */ "./js/modules/deleteTask.js");
+
 
 
 
@@ -209,9 +256,9 @@ function renderTasks() {
 							<span>${this.title}</span>
 						</div>
 						<div class="main__task-interactiv">
-							<img src="img/pencil.svg" class="main__task-icon">
-							<img src="img/check-mark.svg" class="main__task-icon">
-							<img src="img/delete.svg" class="main__task-icon">
+							<img src="img/pencil.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/check-mark.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/delete.svg" class="main__task-icon deleteBtn" data-taskId=${this.id}>
 						</div>
 					</div>
 					<div class="main__task-block-two" data-task=${this.id}>
@@ -246,8 +293,7 @@ function renderTasks() {
 
     if (!res.ok) {
       throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
-    } // console.log(res);
-
+    }
 
     return res.json();
   }
@@ -266,6 +312,8 @@ function renderTasks() {
         task.render();
       });
     }
+  }).then(() => {
+    (0,_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
   }).catch(error => {
     console.log(error);
   }).finally(() => {

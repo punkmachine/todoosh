@@ -16,7 +16,7 @@ function addTask() {
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8',
 				"alg": "HS256",
-					"typ": "JWT",
+				"typ": "JWT",
 				"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU"
 			},
 			mode: 'cors',

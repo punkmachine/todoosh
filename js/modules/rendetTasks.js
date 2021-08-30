@@ -1,6 +1,7 @@
 'use strict';
 
 import taskVisibleDescr from "./taskVisibleDescr";
+import deleteTask from './deleteTask';
 
 function renderTasks() {
 	class TaskCard {
@@ -29,9 +30,9 @@ function renderTasks() {
 							<span>${this.title}</span>
 						</div>
 						<div class="main__task-interactiv">
-							<img src="img/pencil.svg" class="main__task-icon">
-							<img src="img/check-mark.svg" class="main__task-icon">
-							<img src="img/delete.svg" class="main__task-icon">
+							<img src="img/pencil.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/check-mark.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/delete.svg" class="main__task-icon deleteBtn" data-taskId=${this.id}>
 						</div>
 					</div>
 					<div class="main__task-block-two" data-task=${this.id}>
@@ -69,8 +70,6 @@ function renderTasks() {
 			throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
 		}
 
-		// console.log(res);
-
 		return res.json();
 	}
 
@@ -91,6 +90,8 @@ function renderTasks() {
 					task.render();
 				});
 			}
+		}).then(() => {
+			deleteTask();
 		}).catch((error) => {
 			console.log(error);
 		}).finally(() => {
