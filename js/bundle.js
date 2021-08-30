@@ -101,6 +101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
+
+
 
 
 function deleteTask() {
@@ -124,7 +127,9 @@ function deleteTask() {
     item.addEventListener('click', () => {
       let task = document.querySelector(`[data-task="${idTask}"]`);
       deleteData(`http://localhost:8080/api/task/${task.dataset.task}`).then(res => {
-        console.log('Успешно удалено');
+        console.log('Удалено успешно');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        console.log(res.status);
       }).catch(error => {
         console.log('Ошибка fetch:' + error);
       });
@@ -357,6 +362,14 @@ function taskVisibleDescr() {
     }
   }
 
+  function getItemDescr(id, arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].dataset.task == id) {
+        return arr[i];
+      }
+    }
+  }
+
   tasksDescr.forEach(function (item) {
     item.style.display = 'none';
   });
@@ -365,14 +378,14 @@ function taskVisibleDescr() {
   });
   tasksTitle.forEach(function (item) {
     item.addEventListener('click', () => {
-      let itemDescr = tasksDescr[item.dataset.task - 1];
+      let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
       let triangle = item.querySelector('svg');
       transformStyleItem(itemDescr, triangle);
     });
   });
   doneTasksTitle.forEach(function (item) {
     item.addEventListener('click', () => {
-      let itemDescr = doneTasksDescr[item.dataset.done - 1];
+      let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
       let triangle = item.querySelector('svg');
       transformStyleItem(itemDescr, triangle);
     });

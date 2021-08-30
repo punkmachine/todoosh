@@ -20,6 +20,14 @@ function taskVisibleDescr() {
 		}
 	}
 
+	function getItemDescr(id, arr) {
+		for (let i = 0; i < arr.length; i++) {
+			if (arr[i].dataset.task == id) {
+				return arr[i];
+			}
+		}
+	}
+
 	tasksDescr.forEach(function(item) {
 		item.style.display = 'none';
 	});
@@ -30,16 +38,16 @@ function taskVisibleDescr() {
 
 	tasksTitle.forEach(function(item) {
 		item.addEventListener('click', () => {
-			let itemDescr = tasksDescr[item.dataset.task-1];
+			let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
 			let triangle = item.querySelector('svg');
 
-			transformStyleItem(itemDescr, triangle)
+			transformStyleItem(itemDescr, triangle);
 		});
 	});
 
 	doneTasksTitle.forEach(function(item) {
 		item.addEventListener('click', () => {
-			let itemDescr = doneTasksDescr[item.dataset.done-1];
+			let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
 			let triangle = item.querySelector('svg');
 
 			transformStyleItem(itemDescr, triangle)

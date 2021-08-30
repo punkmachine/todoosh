@@ -1,5 +1,7 @@
 'use strict';
 
+import renderTasks from './rendetTasks';
+
 function deleteTask() {
 	let deleteBtn = document.querySelectorAll('.deleteBtn');
 
@@ -25,7 +27,9 @@ function deleteTask() {
 
 			deleteData(`http://localhost:8080/api/task/${task.dataset.task}`)
 				.then((res) => {
-					console.log('Успешно удалено');
+					console.log('Удалено успешно');
+					renderTasks();
+					console.log(res.status);
 				}).catch((error) => {
 					console.log('Ошибка fetch:' + error);
 				});
