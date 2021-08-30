@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PunkMachinProjects/todosh.git"
+    "url": "git+https://github.com/punkmachine/todosh.git"
   },
   "author": "PunkMachin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PunkMachinProjects/todosh/issues"
+    "url": "https://github.com/punkmachine/todosh/issues"
   },
-  "homepage": "https://github.com/PunkMachinProjects/todosh#readme",
+  "homepage": "https://github.com/punkmachine/todosh#readme",
   "browserslist": [
 	"> 3%"
    ],
