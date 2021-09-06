@@ -327,7 +327,7 @@ function taskVisibleDescr() {
   let tasksTitle = document.querySelectorAll('.main__task-title'),
       tasksDescr = document.querySelectorAll('.main__task-block-two'),
       doneTasksTitle = document.querySelectorAll('.done__task-title'),
-      doneTasksDescr = document.querySelectorAll('.done__task-block-two');
+      doneTasksDescr = document.querySelectorAll('.done__task-block-two'); //Изменение стилей у таска
 
   function transformStyleItem(itemDescr, triangle) {
     if (itemDescr.style.display == 'none') {
@@ -349,22 +349,23 @@ function taskVisibleDescr() {
         return arr[i];
       }
     }
-  }
+  } //начальное прописывание inline стилей у descr
 
-  tasksDescr.forEach(function (item) {
+
+  tasksDescr.forEach(item => {
     item.style.display = 'none';
   });
-  doneTasksDescr.forEach(function (item) {
+  doneTasksDescr.forEach(item => {
     item.style.display = 'none';
   });
-  tasksTitle.forEach(function (item) {
+  tasksTitle.forEach(item => {
     item.addEventListener('click', () => {
       let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
       let triangle = item.querySelector('svg');
       transformStyleItem(itemDescr, triangle);
     });
   });
-  doneTasksTitle.forEach(function (item) {
+  doneTasksTitle.forEach(item => {
     item.addEventListener('click', () => {
       let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
       let triangle = item.querySelector('svg');
@@ -432,13 +433,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 
 
+const myHeaders = {
+  'Content-Type': 'application/json;charset=utf-8',
+  'alg': 'HS256',
+  'typ': 'JWT',
+  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA'
+};
+
 async function postData(url, json, method) {
-  const myHeaders = {
-    'Content-Type': 'application/json;charset=utf-8',
-    'alg': 'HS256',
-    'typ': 'JWT',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA'
-  };
   const res = await fetch(url, {
     method: method,
     headers: myHeaders,
@@ -449,12 +451,6 @@ async function postData(url, json, method) {
 }
 
 async function getData(url, method) {
-  const myHeaders = {
-    'Content-Type': 'application/json;charset=utf-8',
-    'alg': 'HS256',
-    'typ': 'JWT',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA'
-  };
   const res = await fetch(url, {
     method: method,
     headers: myHeaders,

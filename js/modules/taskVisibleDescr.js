@@ -6,6 +6,7 @@ function taskVisibleDescr() {
 		doneTasksTitle = document.querySelectorAll('.done__task-title'),
 		doneTasksDescr = document.querySelectorAll('.done__task-block-two');
 
+	//Изменение стилей у таска
 	function transformStyleItem(itemDescr, triangle) {
 		if (itemDescr.style.display == 'none') {
 			itemDescr.style.display = 'block';
@@ -28,15 +29,16 @@ function taskVisibleDescr() {
 		}
 	}
 
-	tasksDescr.forEach(function(item) {
+	//начальное прописывание inline стилей у descr
+	tasksDescr.forEach((item) => {
 		item.style.display = 'none';
 	});
 
-	doneTasksDescr.forEach(function(item) {
+	doneTasksDescr.forEach((item) => {
 		item.style.display = 'none';
 	});
 
-	tasksTitle.forEach(function(item) {
+	tasksTitle.forEach((item) => {
 		item.addEventListener('click', () => {
 			let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
 			let triangle = item.querySelector('svg');
@@ -45,7 +47,7 @@ function taskVisibleDescr() {
 		});
 	});
 
-	doneTasksTitle.forEach(function(item) {
+	doneTasksTitle.forEach((item) => {
 		item.addEventListener('click', () => {
 			let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
 			let triangle = item.querySelector('svg');
