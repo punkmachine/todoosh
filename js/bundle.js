@@ -2,6 +2,66 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/ChangeTask.js":
+/*!**********************************!*\
+  !*** ./js/modules/ChangeTask.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "changeDone": () => (/* binding */ changeDone)
+/* harmony export */ });
+/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
+ //TODO: Добавить форму вопроса о подтверждении действий.
+
+
+
+function changeDone() {
+  let doneBtnList = document.querySelectorAll('.doneBtn');
+
+  async function doneData(url) {
+    let json = {
+      isDone: 'true'
+    }; //превращение данных в json
+
+    json = await JSON.stringify(json);
+    console.log(json);
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        "alg": "HS256",
+        "typ": "JWT",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA"
+      },
+      body: json,
+      mode: 'cors'
+    });
+    return await res;
+  }
+
+  doneBtnList.forEach(item => {
+    let idTask = item.dataset.taskid;
+    item.addEventListener('click', () => {
+      let task = document.querySelector(`[data-task="${idTask}"]`);
+      console.log(idTask);
+      console.log(task);
+      doneData(`http://localhost:8080/api/task/${task.dataset.task}`).then(res => {
+        console.log('Отмечено сделанным успешно');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        console.log(res.status);
+      }).catch(error => {
+        console.log('Ошибка fetch:' + error);
+      });
+    });
+  });
+}
+
+
+
+/***/ }),
+
 /***/ "./js/modules/addTask.js":
 /*!*******************************!*\
   !*** ./js/modules/addTask.js ***!
@@ -32,7 +92,7 @@ function addTask() {
         'Content-Type': 'application/json;charset=utf-8',
         "alg": "HS256",
         "typ": "JWT",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA"
       },
       mode: 'cors',
       body: data
@@ -115,7 +175,7 @@ function deleteTask() {
       headers: {
         "alg": "HS256",
         "typ": "JWT",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA"
       },
       mode: 'cors'
     });
@@ -229,6 +289,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskVisibleDescr */ "./js/modules/taskVisibleDescr.js");
 /* harmony import */ var _deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteTask */ "./js/modules/deleteTask.js");
+/* harmony import */ var _ChangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChangeTask */ "./js/modules/ChangeTask.js");
+
 
 
 
@@ -250,10 +312,9 @@ function renderTasks() {
     }
 
     render() {
-      const element = document.createElement('div');
-      element.classList.add('main__task');
-
       if (!this.isDone) {
+        const element = document.createElement('div');
+        element.classList.add('main__task');
         element.innerHTML = `
 					<div class="main__task-block-one">
 						<div class="main__task-title" data-task=${this.id}>
@@ -262,7 +323,7 @@ function renderTasks() {
 						</div>
 						<div class="main__task-interactiv">
 							<img src="img/pencil.svg" class="main__task-icon" data-taskId=${this.id}>
-							<img src="img/check-mark.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/check-mark.svg" class="main__task-icon doneBtn" data-taskId=${this.id}>
 							<img src="img/delete.svg" class="main__task-icon deleteBtn" data-taskId=${this.id}>
 						</div>
 					</div>
@@ -271,9 +332,32 @@ function renderTasks() {
 						<div class="main__task-date">Дата: ${this.date.day}.${getZero(this.date.month)}.${this.date.year}</div>
 					</div>
 				`;
+        document.querySelector('.main__tasks-wrapper').append(element);
+      } else {
+        const element = document.createElement('div');
+        element.classList.add('done__task');
+        element.innerHTML = `
+					<div class="done__task-block-one">
+						<div class="done__task-title" data-task=${this.id}>
+							<svg viewBox="0 0 100 100" class="triangle" style="width: 0.6875em; height: 0.6875em; display: block; fill: inherit; flex-shrink: 0; backface-visibility: hidden; transition: transform 200ms ease-out 0s; transform: rotateZ(90deg); opacity: 1;"><polygon points="5.9,88.2 50,11.8 94.1,88.2 "></polygon></svg>
+							<span>${this.title}</span>
+						</div>
+						<div class="done__task-interactiv">
+							<?xml version="1.0" encoding="iso-8859-1"?><svg class="done__task-icon" data-taskId=${this.id} id=Capa_1 style="enable-background:new 0 0 446.536 446.536"version=1.1 viewBox="0 0 446.536 446.536"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g><path d=M282.488,68.589L351.077,0l95.458,95.458l-68.589,68.589L282.488,68.589z /><polygon points="0.001,446.536 117.523,412.737 33.8,329.014 	"/><path d=M144.604,397.393l-95.458-95.458l212.13-212.13l95.458,95.458L144.604,397.393z /></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+							<?xml version="1.0" encoding="iso-8859-1"?><svg class="done__task-icon data-taskId=${this.id} id=Capa_1 style="enable-background:new 0 0 214.155 214.155"version=1.1 viewBox="0 0 214.155 214.155"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><path d=M74.551,193.448L0,118.896l33.136-33.135l41.415,41.415L181.02,20.707l33.135,33.136L74.551,193.448z /><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+							<?xml version="1.0" encoding="iso-8859-1"?><svg class="done__task-icon" data-taskId=${this.id} id=Layer_1 style="enable-background:new 0 0 443 443"version=1.1 viewBox="0 0 443 443"x=0px xml:space=preserve xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink y=0px><g><path d="M321.785,38h-83.384V0H125.169v38H41.785v60h280V38z M155.169,30h53.232v8h-53.232V30z"/><path d="M295.142,214.31l5.66-86.31H62.769l19.016,290h114.172c-14.861-21.067-23.602-46.746-23.602-74.43
+								C172.355,274.43,226.849,217.779,295.142,214.31z"/><path d="M301.785,244.141c-54.826,0-99.43,44.604-99.43,99.429S246.959,443,301.785,443s99.43-44.604,99.43-99.43
+								S356.611,244.141,301.785,244.141z M355.961,376.533l-21.213,21.213l-32.963-32.963l-32.963,32.963l-21.213-21.213l32.963-32.963
+								l-32.963-32.963l21.213-21.213l32.963,32.963l32.963-32.963l21.213,21.213l-32.963,32.963L355.961,376.533z"/></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+						</div>
+					</div>
+					<div class="done__task-block-two" data-task=${this.id}>
+						<div class="done__task-descr">${this.descr}</div>
+						<div class="done__task-date">Дата: ${this.date.day}.${getZero(this.date.month)}.${this.date.year}</div>
+					</div>
+				`;
+        document.querySelector('.done__tasks-wrapper').append(element);
       }
-
-      document.querySelector('.main__tasks-wrapper').append(element);
     }
 
   }
@@ -290,7 +374,7 @@ function renderTasks() {
   async function getData(url) {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMzQxMiJ9.95ohW9ypI-87m3P6H-otIpPM-5W2iqeTucSWIdst8OU');
+    myHeaders.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA');
     const res = await fetch(url, {
       method: 'GET',
       headers: myHeaders
@@ -312,6 +396,7 @@ function renderTasks() {
       document.querySelector('.main__tasks-wrapper').innerHTML = 'Заданий пока нет. ';
     } else {
       document.querySelector('.main__tasks-wrapper').innerHTML = '';
+      document.querySelector('.done__tasks-wrapper').innerHTML = '';
       arrayTasks.forEach(function (item, index) {
         let task = new TaskCard(item.id, item.name, item.updatedAt, item.isDone, item.description);
         task.render();
@@ -319,6 +404,7 @@ function renderTasks() {
     }
   }).then(() => {
     (0,_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
+    (0,_ChangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
   }).catch(error => {
     console.log(error);
   }).finally(() => {
