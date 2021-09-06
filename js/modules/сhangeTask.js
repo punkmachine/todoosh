@@ -20,13 +20,11 @@ function changeDone() {
 		
 			//превращение данных в json
 			json = JSON.stringify(json);
-			console.log(json);
 
 			postData(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT')
 				.then((res) => {
 					console.log('Отмечено сделанным успешно');
 					renderTasks();
-					console.log(res.status);
 				}).catch((error) => {
 					console.log('Ошибка fetch:' + error);
 				});

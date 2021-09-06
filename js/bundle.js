@@ -14,32 +14,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
+
 
 
 
 
 
 function addTask() {
-  //modal add 
   const modalAdd = document.querySelector('#add'),
         modalAddClose = modalAdd.querySelector('.modal__close'),
-        modalAddOpen = document.querySelector('.main__add-tasks'); //настройка запроса, посыл запроса на сервер и получение ответа
-
-  async function postData(url, data) {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        "alg": "HS256",
-        "typ": "JWT",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA"
-      },
-      mode: 'cors',
-      body: data
-    });
-    return await res;
-  }
-
+        modalAddOpen = document.querySelector('.main__add-tasks');
   modalAddOpen.addEventListener('click', () => {
     (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalOpen)(modalAdd);
   });
@@ -66,10 +51,9 @@ function addTask() {
     json.name = S(`${json.name}`).humanize().s;
     json.description = S(`${json.description}`).humanize().s; //превращение данных в json
 
-    json = JSON.stringify(json);
-    console.log(json); //обработка промиса
+    json = JSON.stringify(json); //обработка промиса
 
-    postData('http://localhost:8080/api/task/new', json).then(res => {
+    (0,_services_data__WEBPACK_IMPORTED_MODULE_2__.postData)('http://localhost:8080/api/task/new', json, 'POST').then(res => {
       if (res.status === 200) {
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
@@ -450,11 +434,9 @@ function changeDone() {
       }; //превращение данных в json
 
       json = JSON.stringify(json);
-      console.log(json);
       (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
         console.log('Отмечено сделанным успешно');
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-        console.log(res.status);
       }).catch(error => {
         console.log('Ошибка fetch:' + error);
       });
