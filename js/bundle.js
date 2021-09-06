@@ -433,41 +433,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "changeDone": () => (/* binding */ changeDone)
 /* harmony export */ });
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
  //TODO: Добавить форму вопроса о подтверждении действий.
+
 
 
 
 function changeDone() {
   let doneBtnList = document.querySelectorAll('.doneBtn');
-
-  async function doneData(url) {
-    let json = {
-      isDone: 'true'
-    }; //превращение данных в json
-
-    json = await JSON.stringify(json);
-    console.log(json);
-    const res = await fetch(url, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        "alg": "HS256",
-        "typ": "JWT",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA"
-      },
-      body: json,
-      mode: 'cors'
-    });
-    return await res;
-  }
-
   doneBtnList.forEach(item => {
     let idTask = item.dataset.taskid;
     item.addEventListener('click', () => {
       let task = document.querySelector(`[data-task="${idTask}"]`);
-      console.log(idTask);
-      console.log(task);
-      doneData(`http://localhost:8080/api/task/${task.dataset.task}`).then(res => {
+      let json = {
+        isDone: 'true'
+      }; //превращение данных в json
+
+      json = JSON.stringify(json);
+      console.log(json);
+      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
         console.log('Отмечено сделанным успешно');
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
         console.log(res.status);
@@ -476,6 +460,38 @@ function changeDone() {
       });
     });
   });
+}
+
+
+
+/***/ }),
+
+/***/ "./js/services/data.js":
+/*!*****************************!*\
+  !*** ./js/services/data.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+
+
+async function postData(url, json, method) {
+  const myHeaders = {
+    'Content-Type': 'application/json;charset=utf-8',
+    'alg': 'HS256',
+    'typ': 'JWT',
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA'
+  };
+  const res = await fetch(url, {
+    method: method,
+    headers: myHeaders,
+    body: json,
+    mode: 'cors'
+  });
+  return await res;
 }
 
 

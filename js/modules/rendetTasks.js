@@ -2,7 +2,7 @@
 
 import taskVisibleDescr from "./taskVisibleDescr";
 import deleteTask from './deleteTask';
-import { changeDone } from './ChangeTask'
+import { changeDone } from './сhangeTask'
 
 function renderTasks() {
 	class TaskCard {
