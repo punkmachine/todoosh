@@ -2,7 +2,8 @@
 
 import taskVisibleDescr from "./taskVisibleDescr";
 import deleteTask from './deleteTask';
-import { changeDone } from './сhangeTask'
+import { changeDone } from './сhangeTask';
+import { getData } from '../services/data';
 
 function renderTasks() {
 	class TaskCard {
@@ -16,7 +17,6 @@ function renderTasks() {
 				'month': +date.slice(5, 7),
 				'day': +date.slice(8, 10),
 			}
-			this.time = date;
 		}
 
 		render() {
@@ -81,29 +81,10 @@ function renderTasks() {
 		}
 	}
 
-	//получени всех тасков
-	async function getData(url) {
-		const myHeaders = new Headers();
-
-		myHeaders.append('Content-Type', 'application/json');
-		myHeaders.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA');
-
-		const res = await fetch(url, {
-			method: 'GET',
-			headers: myHeaders,
-		});
-
-		if (!res.ok) {
-			throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
-		}
-
-		return res.json();
-	}
-
 	let arrayTasks = [];
 
 	//промис получения тасков
-	getData('http://localhost:8080/api/tasks')
+	getData('http://localhost:8080/api/tasks', 'GET')
 		.then((res) => {
 			arrayTasks = res;
 			

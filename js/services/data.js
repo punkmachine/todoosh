@@ -32,7 +32,11 @@ async function getData(url, method) {
 		mode: 'cors'
 	});
 
-	return await res;
+	if (method === 'GET') {
+		return await res.json();
+	} else {
+		return await res;
+	}
 }
 
 export { postData, getData };

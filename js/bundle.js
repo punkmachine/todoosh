@@ -201,6 +201,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskVisibleDescr */ "./js/modules/taskVisibleDescr.js");
 /* harmony import */ var _deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteTask */ "./js/modules/deleteTask.js");
 /* harmony import */ var _hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./сhangeTask */ "./js/modules/сhangeTask.js");
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
+
 
 
 
@@ -219,7 +221,6 @@ function renderTasks() {
         'month': +date.slice(5, 7),
         'day': +date.slice(8, 10)
       };
-      this.time = date;
     }
 
     render() {
@@ -279,28 +280,11 @@ function renderTasks() {
     } else {
       return num;
     }
-  } //получени всех тасков
-
-
-  async function getData(url) {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIzNDEyfQ.FGIdlz8lSwIByLlbX2K9Qp5xgZTtLuhD3YlH5yLq9NA');
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: myHeaders
-    });
-
-    if (!res.ok) {
-      throw new Error(`Не получается обработать fetch ${url}, статус: ${res.status}`);
-    }
-
-    return res.json();
   }
 
   let arrayTasks = []; //промис получения тасков
 
-  getData('http://localhost:8080/api/tasks').then(res => {
+  (0,_services_data__WEBPACK_IMPORTED_MODULE_3__.getData)('http://localhost:8080/api/tasks', 'GET').then(res => {
     arrayTasks = res;
 
     if (arrayTasks.length == 0) {
@@ -476,7 +460,12 @@ async function getData(url, method) {
     headers: myHeaders,
     mode: 'cors'
   });
-  return await res;
+
+  if (method === 'GET') {
+    return await res.json();
+  } else {
+    return await res;
+  }
 }
 
 
