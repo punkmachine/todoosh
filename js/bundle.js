@@ -87,6 +87,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
+/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
+
 
 
 
@@ -98,11 +100,23 @@ function deleteTask() {
     let idTask = item.dataset.taskid;
     item.addEventListener('click', () => {
       let task = document.querySelector(`[data-task="${idTask}"]`);
-      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${task.dataset.task}`, 'DELETE').then(res => {
-        console.log('Удалено успешно');
-        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-      }).catch(error => {
-        console.log('Ошибка fetch:' + error);
+      const modalDel = document.querySelector('#deleteForm'),
+            btnYes = modalDel.querySelector('[data-delete="true"]'),
+            btnNo = modalDel.querySelector('[data-delete="false"]');
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDel);
+      btnYes.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
+        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${task.dataset.task}`, 'DELETE').then(res => {
+          console.log('Удалено успешно');
+          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        }).catch(error => {
+          console.log('Ошибка fetch:' + error);
+        });
+      });
+      btnNo.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
       });
     });
   });
