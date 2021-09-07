@@ -58,6 +58,7 @@
 
 		&-icon {
 			@include task-icon;
+			cursor: pointer;
 		}
 
 		&-interactiv {
@@ -119,6 +120,60 @@
 
 		&-interactiv {
 			@include task-interactiv;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.main {
+		max-width: 740px;
+
+		&__task {
+			margin: 10px 5px;
+		}
+	}
+
+	.done {
+		&__task {
+			margin: 10px 5px;
+		}
+	}
+}
+
+@media (max-width: 425px) {
+	.main {
+		max-width: 400px;
+
+		&__add-tasks {
+			width: 36px;
+			height: 36px;
+			margin: 0 auto;
+			
+			span {
+				font-size: 28px;
+			}
+		}
+
+		&__task {
+			margin: 10px 0;
+
+			&-icon {
+				width: 22px;
+				height: 22px;
+				margin: 0 6px;
+			}
+		}		
+	}
+
+	.done {
+		&__task {
+			margin: 10px 0;
+
+			&-icon {
+				width: 22px;
+				height: 22px;
+				margin: 0 6px !important;
+			}
 		}
 	}
 }

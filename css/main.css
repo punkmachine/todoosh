@@ -24,7 +24,7 @@
 }
 
 .header__auth {
-  width: 280px;
+  width: 220px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,6 +66,39 @@
 
 .header__register:focus {
   outline: none;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 10px;
+  }
+  .header__logo {
+    width: 110px;
+  }
+  .header__auth {
+    width: 200px;
+  }
+  .header__login {
+    padding: 8px 15px;
+  }
+  .header__register {
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 425px) {
+  .header__logo {
+    width: 100px;
+  }
+  .header__auth {
+    width: 200px;
+  }
+  .header__login {
+    padding: 5px 13px;
+  }
+  .header__register {
+    padding: 5px 13px;
+  }
 }
 
 .modal {
@@ -206,6 +239,46 @@
           justify-content: flex-end;
 }
 
+@media (max-width: 768px) {
+  .modal__wrapper {
+    max-width: 380px;
+    margin: 30px auto;
+  }
+  .modal__content {
+    padding: 20px 30px;
+  }
+  #add .modal__wrapper {
+    max-width: 360px;
+  }
+  #add input {
+    width: 300px;
+  }
+  #add textarea {
+    width: 300px;
+    height: 80px;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 425px) {
+  .modal__wrapper {
+    max-width: 360px;
+    margin: 25px auto;
+  }
+  .modal__content {
+    padding: 10px 20px;
+  }
+  #add .modal__wrapper {
+    max-width: 340px;
+  }
+  #add input {
+    width: 280px;
+  }
+  #add textarea {
+    width: 280px;
+  }
+}
+
 .main {
   max-width: 1340px;
   margin: 0 auto;
@@ -308,6 +381,7 @@
   width: 20px;
   height: 20px;
   margin: 0 4px;
+  cursor: pointer;
 }
 
 .main__task-interactiv {
@@ -415,5 +489,47 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media (max-width: 768px) {
+  .main {
+    max-width: 740px;
+  }
+  .main__task {
+    margin: 10px 5px;
+  }
+  .done__task {
+    margin: 10px 5px;
+  }
+}
+
+@media (max-width: 425px) {
+  .main {
+    max-width: 400px;
+  }
+  .main__add-tasks {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+  }
+  .main__add-tasks span {
+    font-size: 28px;
+  }
+  .main__task {
+    margin: 10px 0;
+  }
+  .main__task-icon {
+    width: 22px;
+    height: 22px;
+    margin: 0 6px;
+  }
+  .done__task {
+    margin: 10px 0;
+  }
+  .done__task-icon {
+    width: 22px;
+    height: 22px;
+    margin: 0 6px !important;
+  }
 }
 /*# sourceMappingURL=main.css.map */
