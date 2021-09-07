@@ -118,12 +118,27 @@
 	<div class="modal modal_hide" id="deleteForm">
 		<div class="modal__wrapper">
 			<div class="modal__content">
-				<form action="#" method="get" class="modal__form">
+				<form action="#" method="post" class="modal__form">
 					<div class="modal__close">&times;</div>
 					<h3 class="modal__title">Уверены, что хотите удалить?</h3>
 					<div class="modal__group-btn">
 						<button class="modal__btn" data-delete="true">Да</button>
 						<button class="modal__btn" data-delete="false">Нет</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal_hide" id="changeDoneForm">
+		<div class="modal__wrapper">
+			<div class="modal__content">
+				<form action="#" method="post" class="modal__form">
+					<div class="modal__close">&times;</div>
+					<h3 class="modal__title">Уверены, что хотите удалить?</h3>
+					<div class="modal__group-btn">
+						<button class="modal__btn" data-done="true">Да</button>
+						<button class="modal__btn" data-done="false">Нет</button>
 					</div>
 				</form>
 			</div>

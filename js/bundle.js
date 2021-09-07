@@ -404,7 +404,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
- //TODO: Добавить форму вопроса о подтверждении действий.
+/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
+
+
 
 
 
@@ -415,16 +417,28 @@ function changeDone() {
     let idTask = item.dataset.taskid;
     item.addEventListener('click', () => {
       let task = document.querySelector(`[data-task="${idTask}"]`);
-      let json = {
-        isDone: 'true'
-      }; //превращение данных в json
+      const modalDone = document.querySelector('#changeDoneForm'),
+            btnYes = modalDone.querySelector('[data-done="true"]'),
+            btnNo = modalDone.querySelector('[data-done="false"]');
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDone);
+      btnYes.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+        let json = {
+          isDone: 'true'
+        }; //превращение данных в json
 
-      json = JSON.stringify(json);
-      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
-        console.log('Отмечено сделанным успешно');
-        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-      }).catch(error => {
-        console.log('Ошибка fetch:' + error);
+        json = JSON.stringify(json);
+        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
+          console.log('Отмечено сделанным успешно');
+          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        }).catch(error => {
+          console.log('Ошибка fetch:' + error);
+        });
+      });
+      btnNo.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
       });
     });
   });
