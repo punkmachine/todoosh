@@ -24,6 +24,10 @@ function renderTasks() {
 				const element = document.createElement('div');
 				element.classList.add('main__task');
 
+				if (this.descr === '') {
+					this.descr = 'Описание не задано.';
+				}
+
 				element.innerHTML = `
 					<div class="main__task-block-one">
 						<div class="main__task-title" data-task=${this.id}>
@@ -46,6 +50,10 @@ function renderTasks() {
 			} else {
 				const element = document.createElement('div');
 				element.classList.add('done__task');
+
+				if (this.descr === '') {
+					this.descr = 'Описание не задано.';
+				}
 
 				element.innerHTML = `
 					<div class="done__task-block-one">
