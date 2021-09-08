@@ -63,7 +63,7 @@ function addTask() {
         alert(`Отправка данных не произошла, код ошибки ${res.status}`);
       }
     }).catch(error => {
-      alert('Все плохо!');
+      alert('Сервер временно не доступен');
       console.log(error);
     }).finally(() => {
       form.reset();
@@ -112,6 +112,7 @@ function deleteTask() {
           (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
         }).catch(error => {
           console.log('Ошибка fetch:' + error);
+          alert('При попытке удалить данные произошла ошибка.');
         });
       });
       btnNo.addEventListener('click', event => {
@@ -325,6 +326,7 @@ function renderTasks() {
     (0,_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
     (0,_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
   }).catch(error => {
+    alert('Сервер временно не доступен!');
     console.log(error);
   }).finally(() => {
     (0,_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__.default)();

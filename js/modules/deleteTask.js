@@ -29,6 +29,7 @@ function deleteTask() {
 						renderTasks();
 					}).catch((error) => {
 						console.log('Ошибка fetch:' + error);
+						alert('При попытке удалить данные произошла ошибка.');
 					});
 			});
 

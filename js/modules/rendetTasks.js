@@ -111,6 +111,7 @@ function renderTasks() {
 			deleteTask();
 			changeDone();
 		}).catch((error) => {
+			alert('Сервер временно не доступен!');
 			console.log(error);
 		}).finally(() => {
 			taskVisibleDescr();

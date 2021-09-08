@@ -57,7 +57,7 @@ function addTask() {
 					alert(`Отправка данных не произошла, код ошибки ${res.status}`);
 				}
 			}).catch((error) => {
-				alert('Все плохо!');
+				alert('Сервер временно не доступен');
 				console.log(error);
 			}).finally(() => {
 				form.reset();
