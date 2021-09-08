@@ -462,9 +462,34 @@ function changeDataTasks() {
   let pencilBtn = document.querySelectorAll('.pencilBtn');
   const modalChange = document.querySelector('#changeTask'),
         titleInput = modalChange.querySelector('input'),
-        descrTextarea = modalChange.querySelector('textarea'); //костыль, ибо я так и не понял, почему оно отправляет сабмит n раз, где n - число от геометрической прогрессии двойки. 
+        descrTextarea = modalChange.querySelector('textarea');
 
-  let i = 0;
+  function handler(event) {
+    event.preventDefault();
+    const form = modalChange.querySelector('form'),
+          idTask = form.dataset.taskid;
+    const formData = new FormData(form);
+    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
+
+    json.name = S(`${json.name}`).replaceAll('_', '').s;
+    json.description = S(`${json.description}`).replaceAll('_', '').s;
+    json.name = S(`${json.name}`).humanize().s;
+    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
+
+    json = JSON.stringify(json);
+    console.log(json);
+    (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
+      console.log('Отредактировано успешно');
+      (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+    }).catch(error => {
+      console.log('Ошибка fetch:' + error);
+    }).finally(() => {
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
+      form.reset();
+    });
+    modalChange.removeEventListener('submit', handler);
+  }
+
   pencilBtn.forEach(item => {
     let idTask = item.dataset.taskid;
     item.addEventListener('click', () => {
@@ -473,46 +498,15 @@ function changeDataTasks() {
       let itemForm = document.querySelector('#changeTask');
       itemForm = itemForm.querySelector('form');
       itemForm.dataset.taskid = idTask;
-      console.log(itemForm);
       titleInput.value = taskTitle.innerHTML;
 
-      if (taskDescr.innerHTML == 'Описание не задано.') {
-        descrTextarea.value = '';
-      } else {
+      if (taskDescr.innerHTML != 'Описание не задано.') {
         descrTextarea.value = taskDescr.innerHTML;
       }
 
       (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalChange);
-      i = 0;
+      modalChange.addEventListener('submit', handler);
     });
-  });
-  modalChange.addEventListener('submit', event => {
-    event.preventDefault();
-
-    if (i === 0) {
-      const form = modalChange.querySelector('form'),
-            idTask = form.dataset.taskid;
-      const formData = new FormData(form);
-      let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-
-      json.name = S(`${json.name}`).replaceAll('_', '').s;
-      json.description = S(`${json.description}`).replaceAll('_', '').s;
-      json.name = S(`${json.name}`).humanize().s;
-      json.description = S(`${json.description}`).humanize().s; //превращение данных в json
-
-      json = JSON.stringify(json);
-      console.log(json);
-      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
-        console.log('Отредактировано успешно');
-        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-      }).catch(error => {
-        console.log('Ошибка fetch:' + error);
-      }).finally(() => {
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
-        form.reset();
-      });
-      i = 1;
-    }
   });
 }
 
