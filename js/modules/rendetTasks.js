@@ -2,7 +2,7 @@
 
 import taskVisibleDescr from "./taskVisibleDescr";
 import deleteTask from './deleteTask';
-import { changeDone } from './сhangeTask';
+import { changeDone, changeDataTasks } from './сhangeTask';
 import { getData } from '../services/data';
 
 function renderTasks() {
@@ -35,7 +35,7 @@ function renderTasks() {
 							<span>${this.title}</span>
 						</div>
 						<div class="main__task-interactiv">
-							<img src="img/pencil.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/pencil.svg" class="main__task-icon pencilBtn" data-taskId=${this.id}>
 							<img src="img/check-mark.svg" class="main__task-icon doneBtn" data-taskId=${this.id}>
 							<img src="img/delete.svg" class="main__task-icon deleteBtn" data-taskId=${this.id}>
 						</div>
@@ -110,6 +110,7 @@ function renderTasks() {
 		}).then(() => {
 			deleteTask();
 			changeDone();
+			changeDataTasks();
 		}).catch((error) => {
 			alert('Сервер временно не доступен!');
 			console.log(error);

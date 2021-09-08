@@ -203,19 +203,19 @@
   display: block;
 }
 
-#add form {
+#add form, #changeTask form {
   display: block;
 }
 
-#add .modal__wrapper {
+#add .modal__wrapper, #changeTask .modal__wrapper {
   max-width: 480px;
 }
 
-#add input {
+#add input, #changeTask input {
   width: 400px;
 }
 
-#add textarea {
+#add textarea, #changeTask textarea {
   margin-bottom: 15px;
   width: 400px;
   height: 80px;
@@ -230,7 +230,7 @@
   resize: none;
 }
 
-#add .modal__button-wrapper {
+#add .modal__button-wrapper, #changeTask .modal__button-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

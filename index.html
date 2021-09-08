@@ -161,6 +161,22 @@
 		</div>
 	</div>
 
+	<div class="modal modal_hide" id="changeTask">
+		<div class="modal__wrapper">
+			<div class="modal__content">
+				<form data-taskid="1" method="POST" class="modal__form">
+					<div class="modal__close">&times;</div>
+					<h3 class="modal__title">Добавить задачу</h3>
+					<input required placeholder="Название задачи" name="name" type="text" class="modal__input" autocomplete="off">
+					<textarea placeholder="Описание задачи" name="description" type="text"></textarea>
+					<div class="modal__button-wrapper">
+						<button class="modal__btn">Обновить задачу</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<!-- Библиотека string.js для изменения строк -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/string.js/3.3.3/string.min.js" integrity="sha512-WKMq2RkmPV0fAO4vXuFP4FOJxrZEba3aFc0DIJyVPMNU0anAD+FJFJmXN1xWsD9dev+Upb0huXlrAEBWtDqubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="js/bundle.js"></script>

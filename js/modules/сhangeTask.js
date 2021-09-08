@@ -48,4 +48,77 @@ function changeDone() {
 	});
 }
 
-export { changeDone };
+function changeDataTasks() {
+	let pencilBtn = document.querySelectorAll('.pencilBtn');
+	const modalChange = document.querySelector('#changeTask'),
+		  titleInput = modalChange.querySelector('input'),
+		  descrTextarea = modalChange.querySelector('textarea');
+
+	//костыль, ибо я так и не понял, почему оно отправляет сабмит n раз, где n - число от геометрической прогрессии двойки. 
+	let i = 0;
+
+	pencilBtn.forEach((item) => {
+		let idTask = item.dataset.taskid;
+
+		item.addEventListener('click', () => {	
+			const taskTitle = document.querySelector(`.main__task-title[data-task="${idTask}"]>span`),
+				  taskDescr = document.querySelector(`.main__task-block-two[data-task="${idTask}"]>.main__task-descr`);
+			let itemForm = document.querySelector('#changeTask');
+			
+			itemForm = itemForm.querySelector('form');
+
+			itemForm.dataset.taskid = idTask;
+			console.log(itemForm);
+
+			titleInput.value = taskTitle.innerHTML;
+
+			if (taskDescr.innerHTML == 'Описание не задано.') {
+				descrTextarea.value = '';
+			} else {
+				descrTextarea.value = taskDescr.innerHTML;
+			}
+
+			modalOpen(modalChange);
+
+			i = 0;
+		});
+	});
+
+	modalChange.addEventListener('submit', (event) => {
+		event.preventDefault();
+
+		if (i === 0) {
+			const form = modalChange.querySelector('form'),
+			  idTask = form.dataset.taskid;	
+
+			const formData = new FormData(form);
+
+			let json = Object.fromEntries(formData.entries());
+
+			//обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
+			json.name = S(`${json.name}`).replaceAll('_', '').s;
+			json.description = S(`${json.description}`).replaceAll('_', '').s;
+			json.name = S(`${json.name}`).humanize().s;
+			json.description = S(`${json.description}`).humanize().s;
+
+			//превращение данных в json
+			json = JSON.stringify(json);
+			console.log(json);
+
+			postData(`http://localhost:8080/api/task/${idTask}`, json, 'PUT')
+				.then((res) => {
+					console.log('Отредактировано успешно');
+					renderTasks();
+				}).catch((error) => {
+					console.log('Ошибка fetch:' + error);
+				}).finally(() => {
+					modalClose(modalChange);
+					form.reset();
+				});	
+		
+			i = 1;
+		}
+	});
+}
+
+export { changeDone, changeDataTasks };

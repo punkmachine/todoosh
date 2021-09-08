@@ -254,7 +254,7 @@ function renderTasks() {
 							<span>${this.title}</span>
 						</div>
 						<div class="main__task-interactiv">
-							<img src="img/pencil.svg" class="main__task-icon" data-taskId=${this.id}>
+							<img src="img/pencil.svg" class="main__task-icon pencilBtn" data-taskId=${this.id}>
 							<img src="img/check-mark.svg" class="main__task-icon doneBtn" data-taskId=${this.id}>
 							<img src="img/delete.svg" class="main__task-icon deleteBtn" data-taskId=${this.id}>
 						</div>
@@ -325,6 +325,7 @@ function renderTasks() {
   }).then(() => {
     (0,_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
     (0,_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
+    (0,_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
   }).catch(error => {
     alert('Сервер временно не доступен!');
     console.log(error);
@@ -412,7 +413,8 @@ function taskVisibleDescr() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "changeDone": () => (/* binding */ changeDone)
+/* harmony export */   "changeDone": () => (/* binding */ changeDone),
+/* harmony export */   "changeDataTasks": () => (/* binding */ changeDataTasks)
 /* harmony export */ });
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
@@ -453,6 +455,64 @@ function changeDone() {
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
       });
     });
+  });
+}
+
+function changeDataTasks() {
+  let pencilBtn = document.querySelectorAll('.pencilBtn');
+  const modalChange = document.querySelector('#changeTask'),
+        titleInput = modalChange.querySelector('input'),
+        descrTextarea = modalChange.querySelector('textarea'); //костыль, ибо я так и не понял, почему оно отправляет сабмит n раз, где n - число от геометрической прогрессии двойки. 
+
+  let i = 0;
+  pencilBtn.forEach(item => {
+    let idTask = item.dataset.taskid;
+    item.addEventListener('click', () => {
+      const taskTitle = document.querySelector(`.main__task-title[data-task="${idTask}"]>span`),
+            taskDescr = document.querySelector(`.main__task-block-two[data-task="${idTask}"]>.main__task-descr`);
+      let itemForm = document.querySelector('#changeTask');
+      itemForm = itemForm.querySelector('form');
+      itemForm.dataset.taskid = idTask;
+      console.log(itemForm);
+      titleInput.value = taskTitle.innerHTML;
+
+      if (taskDescr.innerHTML == 'Описание не задано.') {
+        descrTextarea.value = '';
+      } else {
+        descrTextarea.value = taskDescr.innerHTML;
+      }
+
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalChange);
+      i = 0;
+    });
+  });
+  modalChange.addEventListener('submit', event => {
+    event.preventDefault();
+
+    if (i === 0) {
+      const form = modalChange.querySelector('form'),
+            idTask = form.dataset.taskid;
+      const formData = new FormData(form);
+      let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
+
+      json.name = S(`${json.name}`).replaceAll('_', '').s;
+      json.description = S(`${json.description}`).replaceAll('_', '').s;
+      json.name = S(`${json.name}`).humanize().s;
+      json.description = S(`${json.description}`).humanize().s; //превращение данных в json
+
+      json = JSON.stringify(json);
+      console.log(json);
+      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
+        console.log('Отредактировано успешно');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+      }).catch(error => {
+        console.log('Ошибка fetch:' + error);
+      }).finally(() => {
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
+        form.reset();
+      });
+      i = 1;
+    }
   });
 }
 
