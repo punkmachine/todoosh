@@ -41,6 +41,8 @@ function create() {
 					modalClose(modalAdd);
 				} else if (res.status === 401) {
 					alert(`Авторизуйтесь, чтобы добавлять задачи.`);
+				} else if (res.status === 400) {
+					alert(`Данная задача уже внесена в ваш список.`);
 				} else {
 					alert(`Отправка данных не произошла, код ошибки ${res.status}`);
 				}
@@ -50,8 +52,6 @@ function create() {
 			}).finally(() => {
 				form.reset();
 			});
-		
-		modalAdd.removeEventListener('submit', submitForm);
 	}
 
 	modalAdd.addEventListener('submit', submitForm);

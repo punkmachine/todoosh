@@ -16,7 +16,7 @@ function deleteTask() {
 				  btnYes = modalDel.querySelector('[data-delete="true"]'),
 				  btnNo = modalDel.querySelector('[data-delete="false"]');
 
-			function btnYesClick() {
+			function btnYesClick(event) {
 				event.preventDefault();
 
 				getData(`http://localhost:8080/api/task/${item.dataset.taskid}`, 'DELETE')

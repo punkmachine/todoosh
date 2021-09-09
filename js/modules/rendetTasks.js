@@ -3,7 +3,6 @@
 import read from './crud/read';
 import deleteTask from './crud/delete';
 import { changeDone, changeDataTasks } from './crud/update';
-import create from './crud/create';
 import { getData } from '../services/data';
 
 function renderTasks() {
@@ -119,7 +118,6 @@ function renderTasks() {
 			console.log(error);
 		}).finally(() => {
 			read();
-			create();
 		});
 }
 

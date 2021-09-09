@@ -51,6 +51,8 @@ function create() {
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
       } else if (res.status === 401) {
         alert(`Авторизуйтесь, чтобы добавлять задачи.`);
+      } else if (res.status === 400) {
+        alert(`Данная задача уже внесена в ваш список.`);
       } else {
         alert(`Отправка данных не произошла, код ошибки ${res.status}`);
       }
@@ -60,7 +62,6 @@ function create() {
     }).finally(() => {
       form.reset();
     });
-    modalAdd.removeEventListener('submit', submitForm);
   }
 
   modalAdd.addEventListener('submit', submitForm);
@@ -99,7 +100,7 @@ function deleteTask() {
             btnYes = modalDel.querySelector('[data-delete="true"]'),
             btnNo = modalDel.querySelector('[data-delete="false"]');
 
-      function btnYesClick() {
+      function btnYesClick(event) {
         event.preventDefault();
         (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, 'DELETE').then(res => {
           console.log('Удалено успешно');
@@ -217,7 +218,7 @@ function changeDone() {
           btnNo = modalDone.querySelector('[data-done="false"]'),
           modalDoneClose = modalDone.querySelector('.modal__close');
 
-    function doneYesClick() {
+    function doneYesClick(event) {
       event.preventDefault();
       let json = {
         isDone: 'true'
@@ -319,9 +320,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crud_read__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/read */ "./js/modules/crud/read.js");
 /* harmony import */ var _crud_delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/delete */ "./js/modules/crud/delete.js");
 /* harmony import */ var _crud_update__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/update */ "./js/modules/crud/update.js");
-/* harmony import */ var _crud_create__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/create */ "./js/modules/crud/create.js");
-/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
-
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
 
 
 
@@ -416,7 +415,7 @@ function renderTasks() {
 
   let arrayTasks = []; //промис получения тасков
 
-  (0,_services_data__WEBPACK_IMPORTED_MODULE_4__.getData)('http://localhost:8080/api/tasks', 'GET').then(res => {
+  (0,_services_data__WEBPACK_IMPORTED_MODULE_3__.getData)('http://localhost:8080/api/tasks', 'GET').then(res => {
     arrayTasks = res;
 
     if (arrayTasks.length == 0) {
@@ -438,7 +437,6 @@ function renderTasks() {
     console.log(error);
   }).finally(() => {
     (0,_crud_read__WEBPACK_IMPORTED_MODULE_0__.default)();
-    (0,_crud_create__WEBPACK_IMPORTED_MODULE_3__.default)();
   });
 }
 
@@ -586,11 +584,14 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/rendetTasks */ "./js/modules/rendetTasks.js");
+/* harmony import */ var _modules_crud_create__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/crud/create */ "./js/modules/crud/create.js");
+
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+  (0,_modules_crud_create__WEBPACK_IMPORTED_MODULE_1__.default)();
 });
 })();
 

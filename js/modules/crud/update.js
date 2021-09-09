@@ -14,7 +14,7 @@ function changeDone() {
 			  btnNo = modalDone.querySelector('[data-done="false"]'),
 			  modalDoneClose = modalDone.querySelector('.modal__close');
 
-		function doneYesClick() {
+		function doneYesClick(event) {
 			event.preventDefault();
 
 			let json = {
