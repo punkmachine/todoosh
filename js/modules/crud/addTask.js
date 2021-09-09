@@ -1,8 +1,8 @@
 'use strict';
 
-import {modalOpen, modalClose} from '../services/modal';
-import renderTasks from './rendetTasks';
-import { postData } from '../services/data';
+import {modalOpen, modalClose} from '../../services/modal';
+import renderTasks from '../rendetTasks';
+import { postData } from '../../services/data';
 
 function addTask() {
 	const modalAdd = document.querySelector('#add'),

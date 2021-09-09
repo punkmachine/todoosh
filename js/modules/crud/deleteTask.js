@@ -1,8 +1,8 @@
 'use strict';
 
-import renderTasks from './rendetTasks';
-import { getData } from '../services/data';
-import {modalOpen, modalClose} from '../services/modal';
+import renderTasks from '../rendetTasks';
+import { getData } from '../../services/data';
+import {modalOpen, modalClose} from '../../services/modal';
 
 function deleteTask() {
 	let deleteBtn = document.querySelectorAll('.deleteBtn');

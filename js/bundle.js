@@ -2,92 +2,19 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/modules/addTask.js":
-/*!*******************************!*\
-  !*** ./js/modules/addTask.js ***!
-  \*******************************/
+/***/ "./js/modules/crud/deleteTask.js":
+/*!***************************************!*\
+  !*** ./js/modules/crud/deleteTask.js ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
-/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
-/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
-
-
-
-
-
-
-function addTask() {
-  const modalAdd = document.querySelector('#add'),
-        modalAddClose = modalAdd.querySelector('.modal__close'),
-        modalAddOpen = document.querySelector('.main__add-tasks');
-  modalAddOpen.addEventListener('click', () => {
-    (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalOpen)(modalAdd);
-  });
-  document.addEventListener('keydown', function (event) {
-    if (event.code === 'Escape' && modalAdd.classList.contains('modal_show')) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
-    }
-  });
-  modalAdd.addEventListener('click', function (event) {
-    if (event.target === modalAdd || event.target === modalAddClose) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
-    }
-  });
-  modalAdd.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const form = modalAdd.querySelector('form'); //конструкция данных из форм
-
-    const formData = new FormData(form); //Превращение данных в матрицу, потом в объект.
-
-    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-
-    json.name = S(`${json.name}`).replaceAll('_', '').s;
-    json.description = S(`${json.description}`).replaceAll('_', '').s;
-    json.name = S(`${json.name}`).humanize().s;
-    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
-
-    json = JSON.stringify(json); //обработка промиса
-
-    (0,_services_data__WEBPACK_IMPORTED_MODULE_2__.postData)('http://localhost:8080/api/task/new', json, 'POST').then(res => {
-      if (res.status === 200) {
-        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
-      } else if (res.status === 401) {
-        alert(`Авторизуйтесь, чтобы добавлять задачи.`);
-      } else {
-        alert(`Отправка данных не произошла, код ошибки ${res.status}`);
-      }
-    }).catch(error => {
-      alert('Сервер временно не доступен');
-      console.log(error);
-    }).finally(() => {
-      form.reset();
-    });
-  });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addTask);
-
-/***/ }),
-
-/***/ "./js/modules/deleteTask.js":
-/*!**********************************!*\
-  !*** ./js/modules/deleteTask.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
-/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
-/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
+/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rendetTasks */ "./js/modules/rendetTasks.js");
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/data */ "./js/services/data.js");
+/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/modal */ "./js/services/modal.js");
 
 
 
@@ -127,79 +54,179 @@ function deleteTask() {
 
 /***/ }),
 
-/***/ "./js/modules/modalLogin.js":
-/*!**********************************!*\
-  !*** ./js/modules/modalLogin.js ***!
-  \**********************************/
+/***/ "./js/modules/crud/taskVisibleDescr.js":
+/*!*********************************************!*\
+  !*** ./js/modules/crud/taskVisibleDescr.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
 
 
+function taskVisibleDescr() {
+  let tasksTitle = document.querySelectorAll('.main__task-title'),
+      tasksDescr = document.querySelectorAll('.main__task-block-two'),
+      doneTasksTitle = document.querySelectorAll('.done__task-title'),
+      doneTasksDescr = document.querySelectorAll('.done__task-block-two'); //Изменение стилей у таска
 
-
-function modalLogin() {
-  const modalLogin = document.querySelector('#login'),
-        modalLoginClose = modalLogin.querySelector('.modal__close'),
-        modalLoginOpen = document.querySelector('.header__login');
-  modalLoginOpen.addEventListener('click', () => {
-    (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalOpen)(modalLogin);
-  });
-  document.addEventListener('keydown', function (event) {
-    if (event.code === 'Escape' && modalLogin.classList.contains('modal_show')) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalLogin);
+  function transformStyleItem(itemDescr, triangle) {
+    if (itemDescr.style.display == 'none') {
+      itemDescr.style.display = 'block';
+    } else {
+      itemDescr.style.display = 'none';
     }
-  });
-  modalLogin.addEventListener('click', function (event) {
-    if (event.target === modalLogin || event.target === modalLoginClose) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalLogin);
+
+    if (triangle.style.transform == 'rotateZ(180deg)') {
+      triangle.style.transform = 'rotateZ(90deg)';
+    } else {
+      triangle.style.transform = 'rotateZ(180deg)';
     }
+  }
+
+  function getItemDescr(id, arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].dataset.task == id) {
+        return arr[i];
+      }
+    }
+  } //начальное прописывание inline стилей у descr
+
+
+  tasksDescr.forEach(item => {
+    item.style.display = 'none';
+  });
+  doneTasksDescr.forEach(item => {
+    item.style.display = 'none';
+  });
+  tasksTitle.forEach(item => {
+    item.addEventListener('click', () => {
+      let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
+      let triangle = item.querySelector('svg');
+      transformStyleItem(itemDescr, triangle);
+    });
+  });
+  doneTasksTitle.forEach(item => {
+    item.addEventListener('click', () => {
+      let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
+      let triangle = item.querySelector('svg');
+      transformStyleItem(itemDescr, triangle);
+    });
   });
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modalLogin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskVisibleDescr);
 
 /***/ }),
 
-/***/ "./js/modules/modalRegister.js":
-/*!*************************************!*\
-  !*** ./js/modules/modalRegister.js ***!
-  \*************************************/
+/***/ "./js/modules/crud/сhangeTask.js":
+/*!***************************************!*\
+  !*** ./js/modules/crud/сhangeTask.js ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "changeDone": () => (/* binding */ changeDone),
+/* harmony export */   "changeDataTasks": () => (/* binding */ changeDataTasks)
 /* harmony export */ });
-/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
+/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rendetTasks */ "./js/modules/rendetTasks.js");
+/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/data */ "./js/services/data.js");
+/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/modal */ "./js/services/modal.js");
 
 
 
 
-function modalRegister() {
-  const modalRegister = document.querySelector('#register'),
-        modalRegisterClose = modalRegister.querySelector('.modal__close'),
-        modalRegisterOpen = document.querySelector('.header__register');
-  modalRegisterOpen.addEventListener('click', () => {
-    (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalOpen)(modalRegister);
-  });
-  document.addEventListener('keydown', function (event) {
-    if (event.code === 'Escape' && modalRegister.classList.contains('modal_show')) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalRegister);
-    }
-  });
-  modalRegister.addEventListener('click', function (event) {
-    if (event.target === modalRegister || event.target === modalRegisterClose) {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalRegister);
-    }
+
+
+function changeDone() {
+  let doneBtnList = document.querySelectorAll('.doneBtn');
+  doneBtnList.forEach(item => {
+    let idTask = item.dataset.taskid;
+    item.addEventListener('click', () => {
+      let task = document.querySelector(`[data-task="${idTask}"]`);
+      const modalDone = document.querySelector('#changeDoneForm'),
+            btnYes = modalDone.querySelector('[data-done="true"]'),
+            btnNo = modalDone.querySelector('[data-done="false"]');
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDone);
+      btnYes.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+        let json = {
+          isDone: 'true'
+        }; //превращение данных в json
+
+        json = JSON.stringify(json);
+        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
+          console.log('Отмечено сделанным успешно');
+          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        }).catch(error => {
+          console.log('Ошибка fetch:' + error);
+        });
+      });
+      btnNo.addEventListener('click', event => {
+        event.preventDefault();
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+      });
+    });
   });
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modalRegister);
+function changeDataTasks() {
+  let pencilBtn = document.querySelectorAll('.pencilBtn');
+  const modalChange = document.querySelector('#changeTask'),
+        titleInput = modalChange.querySelector('input'),
+        descrTextarea = modalChange.querySelector('textarea');
+
+  function handler(event) {
+    event.preventDefault();
+    const form = modalChange.querySelector('form'),
+          idTask = form.dataset.taskid;
+    const formData = new FormData(form);
+    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
+
+    json.name = S(`${json.name}`).replaceAll('_', '').s;
+    json.description = S(`${json.description}`).replaceAll('_', '').s;
+    json.name = S(`${json.name}`).humanize().s;
+    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
+
+    json = JSON.stringify(json);
+    console.log(json);
+    (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
+      console.log('Отредактировано успешно');
+      (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+    }).catch(error => {
+      console.log('Ошибка fetch:' + error);
+    }).finally(() => {
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
+      form.reset();
+    });
+    modalChange.removeEventListener('submit', handler);
+  }
+
+  pencilBtn.forEach(item => {
+    let idTask = item.dataset.taskid;
+    item.addEventListener('click', () => {
+      const taskTitle = document.querySelector(`.main__task-title[data-task="${idTask}"]>span`),
+            taskDescr = document.querySelector(`.main__task-block-two[data-task="${idTask}"]>.main__task-descr`);
+      let itemForm = document.querySelector('#changeTask');
+      itemForm = itemForm.querySelector('form');
+      itemForm.dataset.taskid = idTask;
+      titleInput.value = taskTitle.innerHTML;
+
+      if (taskDescr.innerHTML != 'Описание не задано.') {
+        descrTextarea.value = taskDescr.innerHTML;
+      }
+
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalChange);
+      modalChange.addEventListener('submit', handler);
+    });
+  });
+}
+
+
 
 /***/ }),
 
@@ -213,9 +240,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./taskVisibleDescr */ "./js/modules/taskVisibleDescr.js");
-/* harmony import */ var _deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteTask */ "./js/modules/deleteTask.js");
-/* harmony import */ var _hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./сhangeTask */ "./js/modules/сhangeTask.js");
+/* harmony import */ var _crud_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/taskVisibleDescr */ "./js/modules/crud/taskVisibleDescr.js");
+/* harmony import */ var _crud_deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/deleteTask */ "./js/modules/crud/deleteTask.js");
+/* harmony import */ var _crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/сhangeTask */ "./js/modules/crud/сhangeTask.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
 
 
@@ -323,194 +350,18 @@ function renderTasks() {
       });
     }
   }).then(() => {
-    (0,_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
-    (0,_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
-    (0,_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
+    (0,_crud_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
+    (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
+    (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
   }).catch(error => {
     alert('Сервер временно не доступен!');
     console.log(error);
   }).finally(() => {
-    (0,_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__.default)();
+    (0,_crud_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__.default)();
   });
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (renderTasks);
-
-/***/ }),
-
-/***/ "./js/modules/taskVisibleDescr.js":
-/*!****************************************!*\
-  !*** ./js/modules/taskVisibleDescr.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-
-
-function taskVisibleDescr() {
-  let tasksTitle = document.querySelectorAll('.main__task-title'),
-      tasksDescr = document.querySelectorAll('.main__task-block-two'),
-      doneTasksTitle = document.querySelectorAll('.done__task-title'),
-      doneTasksDescr = document.querySelectorAll('.done__task-block-two'); //Изменение стилей у таска
-
-  function transformStyleItem(itemDescr, triangle) {
-    if (itemDescr.style.display == 'none') {
-      itemDescr.style.display = 'block';
-    } else {
-      itemDescr.style.display = 'none';
-    }
-
-    if (triangle.style.transform == 'rotateZ(180deg)') {
-      triangle.style.transform = 'rotateZ(90deg)';
-    } else {
-      triangle.style.transform = 'rotateZ(180deg)';
-    }
-  }
-
-  function getItemDescr(id, arr) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].dataset.task == id) {
-        return arr[i];
-      }
-    }
-  } //начальное прописывание inline стилей у descr
-
-
-  tasksDescr.forEach(item => {
-    item.style.display = 'none';
-  });
-  doneTasksDescr.forEach(item => {
-    item.style.display = 'none';
-  });
-  tasksTitle.forEach(item => {
-    item.addEventListener('click', () => {
-      let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
-      let triangle = item.querySelector('svg');
-      transformStyleItem(itemDescr, triangle);
-    });
-  });
-  doneTasksTitle.forEach(item => {
-    item.addEventListener('click', () => {
-      let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
-      let triangle = item.querySelector('svg');
-      transformStyleItem(itemDescr, triangle);
-    });
-  });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskVisibleDescr);
-
-/***/ }),
-
-/***/ "./js/modules/сhangeTask.js":
-/*!**********************************!*\
-  !*** ./js/modules/сhangeTask.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "changeDone": () => (/* binding */ changeDone),
-/* harmony export */   "changeDataTasks": () => (/* binding */ changeDataTasks)
-/* harmony export */ });
-/* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rendetTasks */ "./js/modules/rendetTasks.js");
-/* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
-/* harmony import */ var _services_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/modal */ "./js/services/modal.js");
-
-
-
-
-
-
-function changeDone() {
-  let doneBtnList = document.querySelectorAll('.doneBtn');
-  doneBtnList.forEach(item => {
-    let idTask = item.dataset.taskid;
-    item.addEventListener('click', () => {
-      let task = document.querySelector(`[data-task="${idTask}"]`);
-      const modalDone = document.querySelector('#changeDoneForm'),
-            btnYes = modalDone.querySelector('[data-done="true"]'),
-            btnNo = modalDone.querySelector('[data-done="false"]');
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDone);
-      btnYes.addEventListener('click', event => {
-        event.preventDefault();
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
-        let json = {
-          isDone: 'true'
-        }; //превращение данных в json
-
-        json = JSON.stringify(json);
-        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
-          console.log('Отмечено сделанным успешно');
-          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-        }).catch(error => {
-          console.log('Ошибка fetch:' + error);
-        });
-      });
-      btnNo.addEventListener('click', event => {
-        event.preventDefault();
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
-      });
-    });
-  });
-}
-
-function changeDataTasks() {
-  let pencilBtn = document.querySelectorAll('.pencilBtn');
-  const modalChange = document.querySelector('#changeTask'),
-        titleInput = modalChange.querySelector('input'),
-        descrTextarea = modalChange.querySelector('textarea');
-
-  function handler(event) {
-    event.preventDefault();
-    const form = modalChange.querySelector('form'),
-          idTask = form.dataset.taskid;
-    const formData = new FormData(form);
-    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-
-    json.name = S(`${json.name}`).replaceAll('_', '').s;
-    json.description = S(`${json.description}`).replaceAll('_', '').s;
-    json.name = S(`${json.name}`).humanize().s;
-    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
-
-    json = JSON.stringify(json);
-    console.log(json);
-    (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
-      console.log('Отредактировано успешно');
-      (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-    }).catch(error => {
-      console.log('Ошибка fetch:' + error);
-    }).finally(() => {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
-      form.reset();
-    });
-    modalChange.removeEventListener('submit', handler);
-  }
-
-  pencilBtn.forEach(item => {
-    let idTask = item.dataset.taskid;
-    item.addEventListener('click', () => {
-      const taskTitle = document.querySelector(`.main__task-title[data-task="${idTask}"]>span`),
-            taskDescr = document.querySelector(`.main__task-block-two[data-task="${idTask}"]>.main__task-descr`);
-      let itemForm = document.querySelector('#changeTask');
-      itemForm = itemForm.querySelector('form');
-      itemForm.dataset.taskid = idTask;
-      titleInput.value = taskTitle.innerHTML;
-
-      if (taskDescr.innerHTML != 'Описание не задано.') {
-        descrTextarea.value = taskDescr.innerHTML;
-      }
-
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalChange);
-      modalChange.addEventListener('submit', handler);
-    });
-  });
-}
-
-
 
 /***/ }),
 
@@ -653,21 +504,12 @@ var __webpack_exports__ = {};
   !*** ./js/script.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_modalRegister__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modalRegister */ "./js/modules/modalRegister.js");
-/* harmony import */ var _modules_modalLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modalLogin */ "./js/modules/modalLogin.js");
-/* harmony import */ var _modules_rendetTasks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/rendetTasks */ "./js/modules/rendetTasks.js");
-/* harmony import */ var _modules_addTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/addTask */ "./js/modules/addTask.js");
-
-
-
+/* harmony import */ var _modules_rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/rendetTasks */ "./js/modules/rendetTasks.js");
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  (0,_modules_rendetTasks__WEBPACK_IMPORTED_MODULE_2__.default)();
-  (0,_modules_modalRegister__WEBPACK_IMPORTED_MODULE_0__.default)();
-  (0,_modules_modalLogin__WEBPACK_IMPORTED_MODULE_1__.default)();
-  (0,_modules_addTask__WEBPACK_IMPORTED_MODULE_3__.default)();
+  (0,_modules_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
 });
 })();
 

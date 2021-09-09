@@ -1,6 +1,6 @@
 'use strict';
 
-import {modalOpen, modalClose} from '../services/modal';
+import {modalOpen, modalClose} from '../../services/modal';
  
 function modalRegister() {
 	const modalRegister = document.querySelector('#register'),

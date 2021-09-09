@@ -1,8 +1,8 @@
 'use strict';
 
-import taskVisibleDescr from "./taskVisibleDescr";
-import deleteTask from './deleteTask';
-import { changeDone, changeDataTasks } from './сhangeTask';
+import taskVisibleDescr from "./crud/taskVisibleDescr";
+import deleteTask from './crud/deleteTask';
+import { changeDone, changeDataTasks } from './crud/сhangeTask';
 import { getData } from '../services/data';
 
 function renderTasks() {

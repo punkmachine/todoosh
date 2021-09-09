@@ -1,8 +1,8 @@
 'use strict';
 
-import renderTasks from './rendetTasks';
-import { postData } from '../services/data';
-import {modalOpen, modalClose} from '../services/modal';
+import renderTasks from '../rendetTasks';
+import { postData } from '../../services/data';
+import {modalOpen, modalClose} from '../../services/modal';
 
 function changeDone() {
 	let doneBtnList = document.querySelectorAll('.doneBtn');
