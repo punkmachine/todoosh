@@ -5,45 +5,59 @@ import { postData } from '../../services/data';
 import {modalOpen, modalClose} from '../../services/modal';
 
 function changeDone() {
-	let doneBtnList = document.querySelectorAll('.doneBtn');
+	const taskList = document.querySelectorAll('.main__task');
 
-	doneBtnList.forEach((item) => {
-		let idTask = item.dataset.taskid;
+	taskList.forEach((item) => {
+		let doneBtn = item.querySelector('.doneBtn');
+		const modalDone = document.querySelector('#changeDoneForm'),
+			  btnYes = modalDone.querySelector('[data-done="true"]'),
+			  btnNo = modalDone.querySelector('[data-done="false"]'),
+			  modalDoneClose = modalDone.querySelector('.modal__close');
 
-		item.addEventListener('click', () => {
-			let task = document.querySelector(`[data-task="${idTask}"]`);
-			const modalDone = document.querySelector('#changeDoneForm'),
-				  btnYes = modalDone.querySelector('[data-done="true"]'),
-				  btnNo = modalDone.querySelector('[data-done="false"]');
+		function doneYesClick() {
+			event.preventDefault();
 
+			let json = {
+				isDone: 'true'
+			}
+		
+			//превращение данных в json
+			json = JSON.stringify(json);
+
+			postData(`http://localhost:8080/api/task/${item.dataset.taskid}`, json, 'PUT')
+				.then((res) => {
+					console.log('Отмечено сделанным успешно');
+					renderTasks();
+				}).catch((error) => {
+					console.log('Ошибка fetch:' + error);
+				});
+
+			modalClose(modalDone);
+			btnYes.removeEventListener('click', doneYesClick);
+		}
+
+		doneBtn.addEventListener('click', () => {
 			modalOpen(modalDone);
-
-			btnYes.addEventListener('click', (event) => {
-				event.preventDefault();
-
-				modalClose(modalDone);
-
-				let json = {
-					isDone: 'true'
-				}
-			
-				//превращение данных в json
-				json = JSON.stringify(json);
-	
-				postData(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT')
-					.then((res) => {
-						console.log('Отмечено сделанным успешно');
-						renderTasks();
-					}).catch((error) => {
-						console.log('Ошибка fetch:' + error);
-					});
-			});
 
 			btnNo.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				modalClose(modalDone);
 			});
+
+			modalDone.addEventListener('click', (event) => {
+				if (event.target === modalDone || event.target === modalDoneClose) {
+					modalClose(modalDone);
+				}
+			});
+
+			document.addEventListener('keydown', (event) => {
+				if (event.code === 'Escape' && modalDone.classList.contains('modal_show')) {
+					modalClose(modalDone);
+				}
+			});
+
+			btnYes.addEventListener('click', doneYesClick);
 		});
 	});
 }
@@ -63,12 +77,6 @@ function changeDataTasks() {
 		const formData = new FormData(form);
 
 		let json = Object.fromEntries(formData.entries());
-
-		//обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-		json.name = S(`${json.name}`).replaceAll('_', '').s;
-		json.description = S(`${json.description}`).replaceAll('_', '').s;
-		json.name = S(`${json.name}`).humanize().s;
-		json.description = S(`${json.description}`).humanize().s;
 
 		//превращение данных в json
 		json = JSON.stringify(json);

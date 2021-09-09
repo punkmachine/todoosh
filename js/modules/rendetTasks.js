@@ -2,7 +2,7 @@
 
 import read from './crud/read';
 import deleteTask from './crud/delete';
-import { changeDone, changeDataTasks } from './crud/сhangeTask';
+import { changeDone, changeDataTasks } from './crud/update';
 import create from './crud/create';
 import { getData } from '../services/data';
 

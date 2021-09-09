@@ -188,10 +188,10 @@ function read() {
 
 /***/ }),
 
-/***/ "./js/modules/crud/сhangeTask.js":
-/*!***************************************!*\
-  !*** ./js/modules/crud/сhangeTask.js ***!
-  \***************************************/
+/***/ "./js/modules/crud/update.js":
+/*!***********************************!*\
+  !*** ./js/modules/crud/update.js ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -209,34 +209,48 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function changeDone() {
-  let doneBtnList = document.querySelectorAll('.doneBtn');
-  doneBtnList.forEach(item => {
-    let idTask = item.dataset.taskid;
-    item.addEventListener('click', () => {
-      let task = document.querySelector(`[data-task="${idTask}"]`);
-      const modalDone = document.querySelector('#changeDoneForm'),
-            btnYes = modalDone.querySelector('[data-done="true"]'),
-            btnNo = modalDone.querySelector('[data-done="false"]');
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDone);
-      btnYes.addEventListener('click', event => {
-        event.preventDefault();
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
-        let json = {
-          isDone: 'true'
-        }; //превращение данных в json
+  const taskList = document.querySelectorAll('.main__task');
+  taskList.forEach(item => {
+    let doneBtn = item.querySelector('.doneBtn');
+    const modalDone = document.querySelector('#changeDoneForm'),
+          btnYes = modalDone.querySelector('[data-done="true"]'),
+          btnNo = modalDone.querySelector('[data-done="false"]'),
+          modalDoneClose = modalDone.querySelector('.modal__close');
 
-        json = JSON.stringify(json);
-        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${task.dataset.task}`, json, 'PUT').then(res => {
-          console.log('Отмечено сделанным успешно');
-          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-        }).catch(error => {
-          console.log('Ошибка fetch:' + error);
-        });
+    function doneYesClick() {
+      event.preventDefault();
+      let json = {
+        isDone: 'true'
+      }; //превращение данных в json
+
+      json = JSON.stringify(json);
+      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, json, 'PUT').then(res => {
+        console.log('Отмечено сделанным успешно');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+      }).catch(error => {
+        console.log('Ошибка fetch:' + error);
       });
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+      btnYes.removeEventListener('click', doneYesClick);
+    }
+
+    doneBtn.addEventListener('click', () => {
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDone);
       btnNo.addEventListener('click', event => {
         event.preventDefault();
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
       });
+      modalDone.addEventListener('click', event => {
+        if (event.target === modalDone || event.target === modalDoneClose) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+        }
+      });
+      document.addEventListener('keydown', event => {
+        if (event.code === 'Escape' && modalDone.classList.contains('modal_show')) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDone);
+        }
+      });
+      btnYes.addEventListener('click', doneYesClick);
     });
   });
 }
@@ -304,7 +318,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _crud_read__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/read */ "./js/modules/crud/read.js");
 /* harmony import */ var _crud_delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/delete */ "./js/modules/crud/delete.js");
-/* harmony import */ var _crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/сhangeTask */ "./js/modules/crud/сhangeTask.js");
+/* harmony import */ var _crud_update__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/update */ "./js/modules/crud/update.js");
 /* harmony import */ var _crud_create__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/create */ "./js/modules/crud/create.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
 
@@ -417,8 +431,8 @@ function renderTasks() {
     }
   }).then(() => {
     (0,_crud_delete__WEBPACK_IMPORTED_MODULE_1__.default)();
-    (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
-    (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
+    (0,_crud_update__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
+    (0,_crud_update__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
   }).catch(error => {
     alert('Сервер временно не доступен!');
     console.log(error);
