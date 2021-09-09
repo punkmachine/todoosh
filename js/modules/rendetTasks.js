@@ -1,6 +1,6 @@
 'use strict';
 
-import taskVisibleDescr from './crud/taskVisibleDescr';
+import read from './crud/read';
 import deleteTask from './crud/deleteTask';
 import { changeDone, changeDataTasks } from './crud/сhangeTask';
 import addTask from './crud/addTask';
@@ -24,6 +24,7 @@ function renderTasks() {
 			if (!(this.isDone)) {
 				const element = document.createElement('div');
 				element.classList.add('main__task');
+				element.dataset.taskid = this.id;
 
 				if (this.descr === '') {
 					this.descr = 'Описание не задано.';
@@ -51,6 +52,7 @@ function renderTasks() {
 			} else {
 				const element = document.createElement('div');
 				element.classList.add('done__task');
+				element.dataset.taskid = this.id;
 
 				if (this.descr === '') {
 					this.descr = 'Описание не задано.';
@@ -116,7 +118,7 @@ function renderTasks() {
 			alert('Сервер временно не доступен!');
 			console.log(error);
 		}).finally(() => {
-			taskVisibleDescr();
+			read();
 			addTask();
 		});
 }

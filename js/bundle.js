@@ -127,10 +127,10 @@ function deleteTask() {
 
 /***/ }),
 
-/***/ "./js/modules/crud/taskVisibleDescr.js":
-/*!*********************************************!*\
-  !*** ./js/modules/crud/taskVisibleDescr.js ***!
-  \*********************************************/
+/***/ "./js/modules/crud/read.js":
+/*!*********************************!*\
+  !*** ./js/modules/crud/read.js ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -139,11 +139,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 
 
-function taskVisibleDescr() {
-  let tasksTitle = document.querySelectorAll('.main__task-title'),
-      tasksDescr = document.querySelectorAll('.main__task-block-two'),
-      doneTasksTitle = document.querySelectorAll('.done__task-title'),
-      doneTasksDescr = document.querySelectorAll('.done__task-block-two'); //Изменение стилей у таска
+function read() {
+  const taskList = document.querySelectorAll('.main__task'),
+        doneTaskList = document.querySelectorAll('.done__task');
 
   function transformStyleItem(itemDescr, triangle) {
     if (itemDescr.style.display == 'none') {
@@ -159,38 +157,25 @@ function taskVisibleDescr() {
     }
   }
 
-  function getItemDescr(id, arr) {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].dataset.task == id) {
-        return arr[i];
-      }
-    }
-  } //начальное прописывание inline стилей у descr
-
-
-  tasksDescr.forEach(item => {
-    item.style.display = 'none';
-  });
-  doneTasksDescr.forEach(item => {
-    item.style.display = 'none';
-  });
-  tasksTitle.forEach(item => {
-    item.addEventListener('click', () => {
-      let itemDescr = getItemDescr(item.dataset.task, tasksDescr);
-      let triangle = item.querySelector('svg');
-      transformStyleItem(itemDescr, triangle);
+  function taskClick(item, str) {
+    let descrTask = item.querySelector(`.${str}__task-block-two`),
+        titleTask = item.querySelector(`.${str}__task-title`),
+        triangle = item.querySelector('svg');
+    descrTask.style.display = 'none';
+    titleTask.addEventListener('click', () => {
+      transformStyleItem(descrTask, triangle);
     });
+  }
+
+  taskList.forEach(item => {
+    taskClick(item, 'main');
   });
-  doneTasksTitle.forEach(item => {
-    item.addEventListener('click', () => {
-      let itemDescr = getItemDescr(item.dataset.task, doneTasksDescr);
-      let triangle = item.querySelector('svg');
-      transformStyleItem(itemDescr, triangle);
-    });
+  doneTaskList.forEach(item => {
+    taskClick(item, 'done');
   });
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (taskVisibleDescr);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (read);
 
 /***/ }),
 
@@ -313,7 +298,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _crud_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/taskVisibleDescr */ "./js/modules/crud/taskVisibleDescr.js");
+/* harmony import */ var _crud_read__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/read */ "./js/modules/crud/read.js");
 /* harmony import */ var _crud_deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/deleteTask */ "./js/modules/crud/deleteTask.js");
 /* harmony import */ var _crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/сhangeTask */ "./js/modules/crud/сhangeTask.js");
 /* harmony import */ var _crud_addTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/addTask */ "./js/modules/crud/addTask.js");
@@ -344,6 +329,7 @@ function renderTasks() {
       if (!this.isDone) {
         const element = document.createElement('div');
         element.classList.add('main__task');
+        element.dataset.taskid = this.id;
 
         if (this.descr === '') {
           this.descr = 'Описание не задано.';
@@ -370,6 +356,7 @@ function renderTasks() {
       } else {
         const element = document.createElement('div');
         element.classList.add('done__task');
+        element.dataset.taskid = this.id;
 
         if (this.descr === '') {
           this.descr = 'Описание не задано.';
@@ -432,7 +419,7 @@ function renderTasks() {
     alert('Сервер временно не доступен!');
     console.log(error);
   }).finally(() => {
-    (0,_crud_taskVisibleDescr__WEBPACK_IMPORTED_MODULE_0__.default)();
+    (0,_crud_read__WEBPACK_IMPORTED_MODULE_0__.default)();
     (0,_crud_addTask__WEBPACK_IMPORTED_MODULE_3__.default)();
   });
 }
