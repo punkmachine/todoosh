@@ -4,7 +4,7 @@ import {modalOpen, modalClose} from '../../services/modal';
 import renderTasks from '../rendetTasks';
 import { postData } from '../../services/data';
 
-function addTask() {
+function create() {
 	const modalAdd = document.querySelector('#add'),
 		  modalAddClose = modalAdd.querySelector('.modal__close'),
 		  modalAddOpen = document.querySelector('.main__add-tasks');
@@ -25,27 +25,15 @@ function addTask() {
 		}
 	});
 
-	modalAdd.addEventListener('submit', function(event) {
+	function submitForm(event) {
 		event.preventDefault();
 
 		const form = modalAdd.querySelector('form');
 
-		//конструкция данных из форм
 		const formData = new FormData(form);
-
-		//Превращение данных в матрицу, потом в объект.
 		let json = Object.fromEntries(formData.entries());
-
-		//обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-		json.name = S(`${json.name}`).replaceAll('_', '').s;
-		json.description = S(`${json.description}`).replaceAll('_', '').s;
-		json.name = S(`${json.name}`).humanize().s;
-		json.description = S(`${json.description}`).humanize().s;
-
-		//превращение данных в json
 		json = JSON.stringify(json);
 
-		//обработка промиса
 		postData('http://localhost:8080/api/task/new', json, 'POST')
 			.then((res) => {
 				if (res.status === 200) {
@@ -62,7 +50,11 @@ function addTask() {
 			}).finally(() => {
 				form.reset();
 			});
-	});
+		
+		modalAdd.removeEventListener('submit', submitForm);
+	}
+
+	modalAdd.addEventListener('submit', submitForm);
 }
 
-export default addTask;
+export default create;

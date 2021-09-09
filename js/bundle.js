@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/modules/crud/addTask.js":
-/*!************************************!*\
-  !*** ./js/modules/crud/addTask.js ***!
-  \************************************/
+/***/ "./js/modules/crud/create.js":
+/*!***********************************!*\
+  !*** ./js/modules/crud/create.js ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function addTask() {
+function create() {
   const modalAdd = document.querySelector('#add'),
         modalAddClose = modalAdd.querySelector('.modal__close'),
         modalAddOpen = document.querySelector('.main__add-tasks');
@@ -39,21 +39,12 @@ function addTask() {
     }
   });
 
-  function handler(event) {
+  function submitForm(event) {
     event.preventDefault();
-    const form = modalAdd.querySelector('form'); //конструкция данных из форм
-
-    const formData = new FormData(form); //Превращение данных в матрицу, потом в объект.
-
-    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-
-    json.name = S(`${json.name}`).replaceAll('_', '').s;
-    json.description = S(`${json.description}`).replaceAll('_', '').s;
-    json.name = S(`${json.name}`).humanize().s;
-    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
-
-    json = JSON.stringify(json); //обработка промиса
-
+    const form = modalAdd.querySelector('form');
+    const formData = new FormData(form);
+    let json = Object.fromEntries(formData.entries());
+    json = JSON.stringify(json);
     (0,_services_data__WEBPACK_IMPORTED_MODULE_2__.postData)('http://localhost:8080/api/task/new', json, 'POST').then(res => {
       if (res.status === 200) {
         (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_1__.default)();
@@ -69,13 +60,13 @@ function addTask() {
     }).finally(() => {
       form.reset();
     });
-    modalAdd.removeEventListener('submit', handler);
+    modalAdd.removeEventListener('submit', submitForm);
   }
 
-  modalAdd.addEventListener('submit', handler);
+  modalAdd.addEventListener('submit', submitForm);
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addTask);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (create);
 
 /***/ }),
 
@@ -261,12 +252,7 @@ function changeDataTasks() {
     const form = modalChange.querySelector('form'),
           idTask = form.dataset.taskid;
     const formData = new FormData(form);
-    let json = Object.fromEntries(formData.entries()); //обработка строк для человеческого вида, если пользователь страдает от психических расстройств и вводит не пойми что
-
-    json.name = S(`${json.name}`).replaceAll('_', '').s;
-    json.description = S(`${json.description}`).replaceAll('_', '').s;
-    json.name = S(`${json.name}`).humanize().s;
-    json.description = S(`${json.description}`).humanize().s; //превращение данных в json
+    let json = Object.fromEntries(formData.entries()); //превращение данных в json
 
     json = JSON.stringify(json);
     console.log(json);
@@ -319,7 +305,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _crud_read__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/read */ "./js/modules/crud/read.js");
 /* harmony import */ var _crud_delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/delete */ "./js/modules/crud/delete.js");
 /* harmony import */ var _crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/сhangeTask */ "./js/modules/crud/сhangeTask.js");
-/* harmony import */ var _crud_addTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/addTask */ "./js/modules/crud/addTask.js");
+/* harmony import */ var _crud_create__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/create */ "./js/modules/crud/create.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
 
 
@@ -438,7 +424,7 @@ function renderTasks() {
     console.log(error);
   }).finally(() => {
     (0,_crud_read__WEBPACK_IMPORTED_MODULE_0__.default)();
-    (0,_crud_addTask__WEBPACK_IMPORTED_MODULE_3__.default)();
+    (0,_crud_create__WEBPACK_IMPORTED_MODULE_3__.default)();
   });
 }
 
