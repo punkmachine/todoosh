@@ -1,7 +1,7 @@
 'use strict';
 
 import read from './crud/read';
-import deleteTask from './crud/deleteTask';
+import deleteTask from './crud/delete';
 import { changeDone, changeDataTasks } from './crud/сhangeTask';
 import addTask from './crud/addTask';
 import { getData } from '../services/data';

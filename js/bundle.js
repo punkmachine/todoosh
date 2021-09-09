@@ -38,7 +38,8 @@ function addTask() {
       (0,_services_modal__WEBPACK_IMPORTED_MODULE_0__.modalClose)(modalAdd);
     }
   });
-  modalAdd.addEventListener('submit', function (event) {
+
+  function handler(event) {
     event.preventDefault();
     const form = modalAdd.querySelector('form'); //конструкция данных из форм
 
@@ -68,17 +69,20 @@ function addTask() {
     }).finally(() => {
       form.reset();
     });
-  });
+    modalAdd.removeEventListener('submit', handler);
+  }
+
+  modalAdd.addEventListener('submit', handler);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addTask);
 
 /***/ }),
 
-/***/ "./js/modules/crud/deleteTask.js":
-/*!***************************************!*\
-  !*** ./js/modules/crud/deleteTask.js ***!
-  \***************************************/
+/***/ "./js/modules/crud/delete.js":
+/*!***********************************!*\
+  !*** ./js/modules/crud/delete.js ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -95,29 +99,43 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function deleteTask() {
-  let deleteBtn = document.querySelectorAll('.deleteBtn');
-  deleteBtn.forEach(item => {
-    let idTask = item.dataset.taskid;
-    item.addEventListener('click', () => {
-      let task = document.querySelector(`[data-task="${idTask}"]`);
+  const taskList = document.querySelectorAll('.main__task');
+  taskList.forEach(item => {
+    let deleteBtn = item.querySelector('.deleteBtn');
+    deleteBtn.addEventListener('click', () => {
       const modalDel = document.querySelector('#deleteForm'),
+            modalDelClose = modalDel.querySelector('.modal__close'),
             btnYes = modalDel.querySelector('[data-delete="true"]'),
             btnNo = modalDel.querySelector('[data-delete="false"]');
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDel);
-      btnYes.addEventListener('click', event => {
+
+      function btnYesClick() {
         event.preventDefault();
-        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
-        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${task.dataset.task}`, 'DELETE').then(res => {
+        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, 'DELETE').then(res => {
           console.log('Удалено успешно');
           (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
         }).catch(error => {
           console.log('Ошибка fetch:' + error);
           alert('При попытке удалить данные произошла ошибка.');
         });
-      });
+        (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
+        btnYes.removeEventListener('click', btnYesClick);
+      }
+
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalDel);
+      btnYes.addEventListener('click', btnYesClick);
       btnNo.addEventListener('click', event => {
         event.preventDefault();
         (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
+      });
+      document.addEventListener('keydown', event => {
+        if (event.code === 'Escape' && modalDel.classList.contains('modal_show')) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
+        }
+      });
+      modalDel.addEventListener('click', event => {
+        if (event.target === modalDel || event.target === modalDelClose) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalDel);
+        }
       });
     });
   });
@@ -299,7 +317,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _crud_read__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crud/read */ "./js/modules/crud/read.js");
-/* harmony import */ var _crud_deleteTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/deleteTask */ "./js/modules/crud/deleteTask.js");
+/* harmony import */ var _crud_delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crud/delete */ "./js/modules/crud/delete.js");
 /* harmony import */ var _crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./crud/сhangeTask */ "./js/modules/crud/сhangeTask.js");
 /* harmony import */ var _crud_addTask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./crud/addTask */ "./js/modules/crud/addTask.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/data */ "./js/services/data.js");
@@ -412,7 +430,7 @@ function renderTasks() {
       });
     }
   }).then(() => {
-    (0,_crud_deleteTask__WEBPACK_IMPORTED_MODULE_1__.default)();
+    (0,_crud_delete__WEBPACK_IMPORTED_MODULE_1__.default)();
     (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
     (0,_crud_hangeTask__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
   }).catch(error => {
