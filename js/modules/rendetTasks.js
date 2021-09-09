@@ -1,8 +1,9 @@
 'use strict';
 
-import taskVisibleDescr from "./crud/taskVisibleDescr";
+import taskVisibleDescr from './crud/taskVisibleDescr';
 import deleteTask from './crud/deleteTask';
 import { changeDone, changeDataTasks } from './crud/сhangeTask';
+import addTask from './crud/addTask';
 import { getData } from '../services/data';
 
 function renderTasks() {
@@ -116,6 +117,7 @@ function renderTasks() {
 			console.log(error);
 		}).finally(() => {
 			taskVisibleDescr();
+			addTask();
 		});
 }
 
