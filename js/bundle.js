@@ -222,8 +222,7 @@ function changeDone() {
       event.preventDefault();
       let json = {
         isDone: 'true'
-      }; //превращение данных в json
-
+      };
       json = JSON.stringify(json);
       (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, json, 'PUT').then(res => {
         console.log('Отмечено сделанным успешно');
@@ -257,48 +256,53 @@ function changeDone() {
 }
 
 function changeDataTasks() {
-  let pencilBtn = document.querySelectorAll('.pencilBtn');
-  const modalChange = document.querySelector('#changeTask'),
-        titleInput = modalChange.querySelector('input'),
-        descrTextarea = modalChange.querySelector('textarea');
+  const taskList = document.querySelectorAll('.main__task');
+  taskList.forEach(item => {
+    let updateBtn = item.querySelector('.pencilBtn');
+    updateBtn.addEventListener('click', () => {
+      const modalUpdate = document.querySelector('#changeTask'),
+            modalUpdateClose = modalUpdate.querySelector('.modal__close'),
+            titleTask = item.querySelector('.main__task-title>span'),
+            descrTask = item.querySelector('.main__task-descr');
+      let titleModal = modalUpdate.querySelector('input'),
+          descrModal = modalUpdate.querySelector('textarea');
 
-  function handler(event) {
-    event.preventDefault();
-    const form = modalChange.querySelector('form'),
-          idTask = form.dataset.taskid;
-    const formData = new FormData(form);
-    let json = Object.fromEntries(formData.entries()); //превращение данных в json
-
-    json = JSON.stringify(json);
-    console.log(json);
-    (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${idTask}`, json, 'PUT').then(res => {
-      console.log('Отредактировано успешно');
-      (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
-    }).catch(error => {
-      console.log('Ошибка fetch:' + error);
-    }).finally(() => {
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalChange);
-      form.reset();
-    });
-    modalChange.removeEventListener('submit', handler);
-  }
-
-  pencilBtn.forEach(item => {
-    let idTask = item.dataset.taskid;
-    item.addEventListener('click', () => {
-      const taskTitle = document.querySelector(`.main__task-title[data-task="${idTask}"]>span`),
-            taskDescr = document.querySelector(`.main__task-block-two[data-task="${idTask}"]>.main__task-descr`);
-      let itemForm = document.querySelector('#changeTask');
-      itemForm = itemForm.querySelector('form');
-      itemForm.dataset.taskid = idTask;
-      titleInput.value = taskTitle.innerHTML;
-
-      if (taskDescr.innerHTML != 'Описание не задано.') {
-        descrTextarea.value = taskDescr.innerHTML;
+      function changeDataClick(event) {
+        event.preventDefault();
+        const form = modalUpdate.querySelector('form');
+        const formData = new FormData(form);
+        let json = Object.fromEntries(formData.entries());
+        json = JSON.stringify(json);
+        (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.postData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, json, 'PUT').then(res => {
+          console.log('Отредактировано успешно');
+          (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+        }).catch(error => {
+          console.log('Ошибка fetch:' + error);
+        }).finally(() => {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalUpdate);
+          form.reset();
+        });
+        modalUpdate.removeEventListener('submit', changeDataClick);
       }
 
-      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalChange);
-      modalChange.addEventListener('submit', handler);
+      (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalOpen)(modalUpdate);
+      titleModal.value = titleTask.innerHTML;
+
+      if (descrTask.innerHTML != 'Описание не задано.') {
+        descrModal.value = descrTask.innerHTML;
+      }
+
+      modalUpdate.addEventListener('submit', changeDataClick);
+      document.addEventListener('keydown', event => {
+        if (event.code === 'Escape' && modalUpdate.classList.contains('modal_show')) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalUpdate);
+        }
+      });
+      modalUpdate.addEventListener('click', event => {
+        if (event.target === modalUpdate || event.target === modalUpdateClose) {
+          (0,_services_modal__WEBPACK_IMPORTED_MODULE_2__.modalClose)(modalUpdate);
+        }
+      });
     });
   });
 }
