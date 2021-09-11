@@ -80,6 +80,32 @@
 }
 
 .done {
+	max-width: 1340px;
+	margin: 0 auto;
+	
+	&__delete-wrapper {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-top: 5px;
+	}
+
+	&__delete-tasks {
+		border: 1px solid black;
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+
+		span {
+			user-select: none;
+			font-size: 26px;
+		}
+	}
+
 	&__tasks-wrapper {
 		@include task-wrapper;
 	}

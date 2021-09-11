@@ -58,4 +58,23 @@ function deleteTask() {
 	});
 }
 
-export default deleteTask;
+function deleteAll() {
+	const btnDel = document.querySelector('.done__delete-wrapper');
+
+	btnDel.addEventListener('click', () => {
+		const doneTasks = document.querySelectorAll('.done__task');
+
+		doneTasks.forEach((item) => {
+			getData(`http://localhost:8080/api/task/${item.dataset.taskid}`, 'DELETE')
+				.then((res) => {
+					console.log('Удалено успешно');
+					renderTasks();
+				}).catch((error) => {
+					console.log('Ошибка fetch:' + error);
+					alert('При попытке удалить данные произошла ошибка.');
+				});
+		});
+	});
+}
+
+export {deleteTask, deleteAll};

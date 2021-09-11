@@ -1,7 +1,7 @@
 'use strict';
 
 import read from './crud/read';
-import deleteTask from './crud/delete';
+import { deleteTask, deleteAll } from './crud/delete';
 import { changeDone, changeDataTasks } from './crud/update';
 import { getData } from '../services/data';
 
@@ -111,6 +111,7 @@ function renderTasks() {
 			}
 		}).then(() => {
 			deleteTask();
+			deleteAll();
 			changeDone();
 			changeDataTasks();
 		}).catch((error) => {

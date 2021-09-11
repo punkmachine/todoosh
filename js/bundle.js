@@ -79,7 +79,8 @@ function create() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "deleteTask": () => (/* binding */ deleteTask),
+/* harmony export */   "deleteAll": () => (/* binding */ deleteAll)
 /* harmony export */ });
 /* harmony import */ var _rendetTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../rendetTasks */ "./js/modules/rendetTasks.js");
 /* harmony import */ var _services_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/data */ "./js/services/data.js");
@@ -133,7 +134,23 @@ function deleteTask() {
   });
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (deleteTask);
+function deleteAll() {
+  const btnDel = document.querySelector('.done__delete-wrapper');
+  btnDel.addEventListener('click', () => {
+    const doneTasks = document.querySelectorAll('.done__task');
+    doneTasks.forEach(item => {
+      (0,_services_data__WEBPACK_IMPORTED_MODULE_1__.getData)(`http://localhost:8080/api/task/${item.dataset.taskid}`, 'DELETE').then(res => {
+        console.log('Удалено успешно');
+        (0,_rendetTasks__WEBPACK_IMPORTED_MODULE_0__.default)();
+      }).catch(error => {
+        console.log('Ошибка fetch:' + error);
+        alert('При попытке удалить данные произошла ошибка.');
+      });
+    });
+  });
+}
+
+
 
 /***/ }),
 
@@ -433,7 +450,8 @@ function renderTasks() {
       });
     }
   }).then(() => {
-    (0,_crud_delete__WEBPACK_IMPORTED_MODULE_1__.default)();
+    (0,_crud_delete__WEBPACK_IMPORTED_MODULE_1__.deleteTask)();
+    (0,_crud_delete__WEBPACK_IMPORTED_MODULE_1__.deleteAll)();
     (0,_crud_update__WEBPACK_IMPORTED_MODULE_2__.changeDone)();
     (0,_crud_update__WEBPACK_IMPORTED_MODULE_2__.changeDataTasks)();
   }).catch(error => {
