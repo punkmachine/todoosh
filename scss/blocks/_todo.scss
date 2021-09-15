@@ -10,18 +10,14 @@
 	}
 
 	&__add-tasks {
-		border: 1px solid black;
-		border-radius: 50%;
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
+		@include btn;
+		color: #fff;
+		background-color: $main_color;
+		border-color: $main_color;
 
-		span {
-			user-select: none;
-			font-size: 26px;
+		&:hover {
+			background-color: $main_color-hover;
+			border-color: $main_color-hover;
 		}
 	}
 
@@ -91,18 +87,14 @@
 	}
 
 	&__delete-tasks {
-		border: 1px solid black;
-		border-radius: 50%;
-		width: 30px;
-		height: 30px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
+		@include btn;
+		color: #fff;
+		background-color: $main_color;
+		border-color: $main_color;
 
-		span {
-			user-select: none;
-			font-size: 26px;
+		&:hover {
+			background-color: $main_color-hover;
+			border-color: $main_color-hover;
 		}
 	}
 

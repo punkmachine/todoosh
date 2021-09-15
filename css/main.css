@@ -51,6 +51,11 @@
   outline: none;
 }
 
+.header__login:hover {
+  border-color: #0069d9;
+  background-color: #eceff1;
+}
+
 .header__register {
   padding: 10px 20px;
   cursor: pointer;
@@ -66,6 +71,11 @@
 
 .header__register:focus {
   outline: none;
+}
+
+.header__register:hover {
+  background-color: #0069d9;
+  border-color: #0069d9;
 }
 
 @media (max-width: 768px) {
@@ -298,28 +308,25 @@
 }
 
 .main__add-tasks {
-  border: 1px solid black;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  padding: 10px 20px;
   cursor: pointer;
+  border-radius: 7px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
-.main__add-tasks span {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-size: 26px;
+.main__add-tasks:focus {
+  outline: none;
+}
+
+.main__add-tasks:hover {
+  background-color: #0069d9;
+  border-color: #0069d9;
 }
 
 .main__tasks-wrapper {
@@ -431,28 +438,25 @@
 }
 
 .done__delete-tasks {
-  border: 1px solid black;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  padding: 10px 20px;
   cursor: pointer;
+  border-radius: 7px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: none;
+  font-size: 14px;
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
-.done__delete-tasks span {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  font-size: 26px;
+.done__delete-tasks:focus {
+  outline: none;
+}
+
+.done__delete-tasks:hover {
+  background-color: #0069d9;
+  border-color: #0069d9;
 }
 
 .done__tasks-wrapper {
