@@ -11,18 +11,14 @@ import { Footer } from './components/layout/footer';
 
 function App() {
 	return (
-		<>
+		<Router>
 			<Header />
-			
-			<Router>
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route path="/login" component={LoginPage} />
-				</Switch>
-			</Router>
-
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route path="/login" component={LoginPage} />
+			</Switch>
 			<Footer />
-		</>
+		</Router>
 	);
 }
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import styles from './scss/header.module.scss';
 
 function Header() {
@@ -10,7 +12,7 @@ function Header() {
 					</a>
 				</div>
 				<div>
-					<button className={styles.btn}>Вход</button>
+					<Link to={'/login'} className={styles.btn}>Вход</Link>
 					<button className={styles.btn}>Регистрация</button>
 				</div>
 			</div>
