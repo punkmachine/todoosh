@@ -13,7 +13,7 @@ function Header() {
 				</div>
 				<div>
 					<Link to={'/login'} className={styles.btn}>Вход</Link>
-					<button className={styles.btn}>Регистрация</button>
+					<Link to={'/registration'} className={styles.btn}>Регистрация</Link>
 				</div>
 			</div>
 
