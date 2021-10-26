@@ -14,8 +14,10 @@ function App() {
 		<Router>
 			<Header />
 			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route path="/login" component={LoginPage} />
+				<main className="container">
+					<Route exact path="/" component={Home} />
+					<Route path="/login" component={LoginPage} />
+				</main>
 			</Switch>
 			<Footer />
 		</Router>

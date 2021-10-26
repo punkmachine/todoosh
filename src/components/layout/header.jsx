@@ -7,9 +7,9 @@ function Header() {
 		<header className={styles.header}>
 			<div className={styles.header__content}>
 				<div>
-					<a href="#">
+					<Link to={'/'}>
 						<img src={process.env.PUBLIC_URL + '/img/logotype.svg'} alt='логотип' title='Перейти на главную' /> 
-					</a>
+					</Link>
 				</div>
 				<div>
 					<Link to={'/login'} className={styles.btn}>Вход</Link>
