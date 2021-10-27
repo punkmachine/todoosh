@@ -1,4 +1,4 @@
-import styles from './scss/registration.module.scss';
+import styles from '../scss/modules/pages/registration.module.scss';
 
 function RegistrationPage() {
 	return (

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import styles from './scss/header.module.scss';
+import styles from '../../scss/modules/components/header.module.scss';
 
 function Header() {
 	return (
@@ -16,7 +16,6 @@ function Header() {
 					<Link to={'/registration'} className={styles.btn}>Регистрация</Link>
 				</div>
 			</div>
-
 		</header>
 	);
 }
