@@ -1,15 +1,12 @@
+import { FormReg } from '../components/user/formReg';
+
 import styles from '../scss/modules/pages/registration.module.scss';
 
 function RegistrationPage() {
 	return (
-		<div className={styles.login}>
+		<div className={styles.reg}>
 			<h2 className={styles.title}>Введите свои данные для регистрации.</h2>
-			<form className={styles.login__form}>
-				<input className={styles.input} type="text" placeholder='Ваш логин' />
-				<input className={styles.input} type="password" placeholder='Ваш пароль' />
-				<input className={styles.input} type="password" placeholder='Повторите пароль' />
-				<button className={styles.btn}>Зарегестрироваться</button>
-			</form>
+			<FormReg />
 		</div>
 	);
 }
