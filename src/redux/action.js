@@ -8,8 +8,6 @@ export function registration(login = '', pass = '', secondPass = '') {
 			method: 'POST',
 			url: `http://localhost:8080/auth/registration?username=${login}&password=${pass}`,
 		}).then((res) => {
-			alert('Успешно!')
-
 			dispatch({
 				type: REG,
 				login,
@@ -29,8 +27,6 @@ export function login(login = '', pass = '') {
 			method: 'POST',
 			url: `http://localhost:8080/auth/login?username=${login}&password=${pass}`
 		}).then((res) => {
-			alert('Успешно!')
-
 			dispatch({
 				type: LOGIN,
 				login,

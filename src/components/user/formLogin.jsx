@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login as loginFunc } from '../../redux/action';
+import { useRegirect } from '../../hooks/regirect';
 
 import styles from './../../scss/modules/components/form.module.scss';
 
@@ -9,6 +10,7 @@ function FormLogin() {
 	const data = useSelector(state => state.authReducer);
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
+	const { goHome } = useRegirect();
 
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -24,7 +26,11 @@ function FormLogin() {
 		setPass(event.target.value);
 	}
 
-	console.log(data);
+	useEffect(() => {
+		if (data?.token) {
+			goHome();
+		}
+	}, [data, goHome]);
 
 	return (
 		<form className={styles.form}>

@@ -10,17 +10,18 @@ import { Footer } from './components/layout/footer';
 
 function App() {
 	// TODO: добавить приватные роуты по таскам.
+	// TODO: добавить константы урлов, чтобы юзать вместе с useRegirect
 
 	return (
 		<Router>
 			<Header />
-			<Switch>
-				<main className="container">
+			<main className="container">
+				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={LoginPage} />
 					<Route path="/registration" component={RegistrationPage} />
-				</main>
-			</Switch>
+				</Switch>
+			</main>
 			<Footer />
 		</Router>
 	);
