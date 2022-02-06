@@ -9,6 +9,8 @@ import { Header } from './components/layout/header';
 import { Footer } from './components/layout/footer';
 
 function App() {
+	// TODO: добавить приватные роуты по таскам.
+
 	return (
 		<Router>
 			<Header />
