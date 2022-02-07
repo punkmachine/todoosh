@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { login as loginFunc } from '../../redux/action';
+
 import { useRegirect } from '../../hooks/regirect';
+import { useLocal } from '../../hooks/local';
 
 import styles from './../../scss/modules/components/form.module.scss';
 
 function FormLogin() {
 	const dispatch = useDispatch();
 	const data = useSelector(state => state.authReducer);
+
 	const [login, setLogin] = useState('');
 	const [pass, setPass] = useState('');
+
+	const { setLocalItem } = useLocal();
 	const { goHome } = useRegirect();
 
 	function handleSubmit(event) {
@@ -28,9 +34,11 @@ function FormLogin() {
 
 	useEffect(() => {
 		if (data?.token) {
+			setLocalItem('user', data.login);
 			goHome();
 		}
-	}, [data, goHome]);
+		// eslint-disable-next-line
+	}, [data]);
 
 	return (
 		<form className={styles.form}>

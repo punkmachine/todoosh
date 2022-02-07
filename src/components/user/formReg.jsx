@@ -35,7 +35,8 @@ function FormReg() {
 		if (data?.token) {
 			goHome();
 		}
-	}, [data, goHome]);
+		// eslint-disable-next-line
+	}, [data]);
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
