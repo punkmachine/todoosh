@@ -8,9 +8,10 @@ import { RegistrationPage } from './pages/RegistrationPage'
 import { Header } from './components/layout/header';
 import { Footer } from './components/layout/footer';
 
+import { REGISTRATION_PAGE, LOGIN_PAGE } from './constants/route';
+
 function App() {
 	// TODO: добавить приватные роуты по таскам.
-	// TODO: добавить константы урлов, чтобы юзать вместе с useRegirect
 
 	return (
 		<Router>
@@ -18,8 +19,8 @@ function App() {
 			<main className="container">
 				<Switch>
 					<Route exact path="/" component={Home} />
-					<Route path="/login" component={LoginPage} />
-					<Route path="/registration" component={RegistrationPage} />
+					<Route path={LOGIN_PAGE} component={LoginPage} />
+					<Route path={REGISTRATION_PAGE} component={RegistrationPage} />
 				</Switch>
 			</main>
 			<Footer />
