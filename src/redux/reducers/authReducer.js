@@ -1,5 +1,4 @@
-
-import { REG, LOGIN } from '../types';
+import { REG, LOGIN, CLEAR } from '../types';
 
 const initialState = {
 	login: '',
@@ -25,6 +24,12 @@ const authReducer = (state = initialState, action) => {
 				pass: action.pass,
 				token: action.token
 			};
+		}
+
+		case CLEAR: {
+			return {
+				...initialState
+			}
 		}
 
 		default: {

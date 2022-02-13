@@ -12,6 +12,8 @@ import { REGISTRATION_PAGE, LOGIN_PAGE } from './constants/route';
 
 function App() {
 	// TODO: добавить приватные роуты по таскам.
+	// TODO: куки для хранения токена
+	// TODO: сессион сторедж для хранения данных о заполненом таске, но не созданном.
 
 	return (
 		<Router>

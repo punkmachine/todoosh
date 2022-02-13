@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REG, LOGIN } from './types';
+import { REG, LOGIN, CLEAR } from './types';
 
 export function registration(login = '', pass = '', secondPass = '') {
 	//TODO: Сделать проверку на совпадение pass и secondPass
@@ -37,5 +37,11 @@ export function login(login = '', pass = '') {
 			alert('Ошибка, попробуйте позже!');
 			console.log(error);
 		});
+	}
+}
+
+export function clear() {
+	return {
+		type: CLEAR,
 	}
 }
